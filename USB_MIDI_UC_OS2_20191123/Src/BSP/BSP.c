@@ -70,6 +70,9 @@ void BSP_Init(void)
 	/* Configure the system clock */
 	SystemClock_Config();
 	Delay_init();
+	delay_ms(1000);
+	
+	
 	AT24CXX_Init();
 		
 #if 1
