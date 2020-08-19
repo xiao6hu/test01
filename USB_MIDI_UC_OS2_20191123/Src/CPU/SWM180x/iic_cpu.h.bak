@@ -1,0 +1,65 @@
+/*--------------------------------------------------------------------------*/
+/**@file     iic_cpu.h
+   @brief
+   @details
+   @author   hjt
+   @date     2017-6-12
+   @note
+*/
+/*----------------------------------------------------------------------------*/
+#ifndef __UART_CPU_H__
+#define __UART_CPU_H__
+
+/* Includes ------------------------------------------------------------------*/
+#include "includes.h"
+
+//IICʱדП
+#define IIC_SCL_GPIO     GPIO_Pin_6
+#define IIC_SCL_PORT     GPIOC
+
+//IIC˽¾ޏݍ
+#define IIC_SDA_GPIO     GPIO_Pin_7
+#define IIC_SDA_PORT     GPIOC
+
+void set_iic_sda_in(void);
+void set_iic_sda_out(void);
+
+//IO·½вʨ׃
+#define IIC_SDA_IN()  set_iic_sda_in()
+#define IIC_SDA_OUT() set_iic_sda_out()
+/*
+
+#define IIC_SDA_IN()\  
+        GPIO_Init(IIC_SDA_PORT,\
+                  IIC_SDA_GPIO,\
+                  DIR_IN,\ 
+                  PULL_UP_DIS,\
+                  PULL_DOWM_DIS,\
+                  OPEN_DRAIN_DIS)
+                  
+#define IIC_SDA_OUT() \
+        GPIO_Init(IIC_SDA_PORT,\ 
+                  IIC_SDA_GPIO,\ 
+                  DIR_OUT,\ 
+                  PULL_UP_DIS,\ 
+                  PULL_DOWM_DIS,\
+                  OPEN_DRAIN_DIS)
+*/
+
+//IO²ڗ��define IIC_SCL(Ststus)	GPIO_WriteBit(IIC_SCL_PORT , IIC_SCL_GPIO, (BitAction)Ststus)
+//#define IIC_SDA(Ststus) 	GPIO_WriteBit(IIC_SDA_PORT , IIC_SDA_GPIO, (BitAction)Ststus)
+
+
+#define IIC_SCL(0)	GPIO_ClrBit(IIC_SCL_PORT , IIC_SCL_GPIO)
+#define IIC_SCL(1)	GPIO_SetBit(IIC_SCL_PORT , IIC_SCL_GPIO)
+
+#define IIC_SDA(0) 	GPIO_ClrBit(IIC_SDA_PORT , IIC_SDA_GPIO)
+#define IIC_SDA(1) 	GPIO_SetBit(IIC_SDA_PORT , IIC_SDA_GPIO)
+
+#define READ_SDA() 	GPIO_GetBit(IIC_SDA_PORT , IIC_SDA_GPIO)
+#endif
+
+
+
+
+

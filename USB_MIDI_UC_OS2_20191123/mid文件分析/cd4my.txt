@@ -1,0 +1,70 @@
+Bus Hound 6.01 capture on Windows Vista Service Pack 1 (x86). Complements of www.perisoft.net
+
+cd4
+
+  Device - Device ID (followed by the endpoint for USB devices)
+            (10) м╗пе╤к©з (COM1)
+            (29) J-Link driver
+  Phase  - Phase Type
+            IN    Data in transfer           
+  Data   - Hex dump of the data transferred
+  Descr  - Description of the phase
+  Cmd... - Position in the captured data
+
+
+Device  Phase  Data                                                Description       Cmd.Phase.Ofs(rep)
+------  -----  --------------------------------------------------  ----------------  ------------------
+  10    IN     b0 07 ff b1  07 ff b2 07  ff b3 07 ff  b4 07 ff b5  ................         1.1.0        
+               07 ff b6 07  ff b7 07 ff  b8 07 ff b9  07 ff ba 07  ................         1.1.16       
+  10    IN     ff bb 07 ff  bc 07 ff bd  07 ff be 07  ff bf 07 ff  ................         2.1.0        
+               c0 00 00 b0  0a 40 c0 00  00 b0 0a 40  c0 00 00 b0  .....@.....@....         2.1.16       
+  10    IN     90 48 50 90  30 50 90 4c  50 80 30 00               .HP.0P.LP.0.             3.1.0        
+  10    IN     90 4f 50                                            .OP                      4.1.0        
+  10    IN     80 48 00                                            .H.                      5.1.0        
+  10    IN     90 37 50 80  37 00                                  .7P.7.                   6.1.0        
+  10    IN     80 4c 00                                            .L.                      7.1.0        
+  10    IN     90 4f 50                                            .OP                      8.1.0        
+  10    IN     80 4f 00                                            .O.                      9.1.0        
+  10    IN     90 3c 50 80  3c 00                                  .<P.<.                  10.1.0        
+  10    IN     80 4f 00                                            .O.                     11.1.0        
+  10    IN     90 4f 50                                            .OP                     12.1.0        
+  10    IN     80 4f 00 90  40 50                                  .O..@P                  13.1.0        
+  10    IN     80 40 00                                            .@.                     14.1.0        
+  10    IN     90 4c 50 80  4c 00                                  .LP.L.                  15.1.0        
+  10    IN     90 4f 50                                            .OP                     16.1.0        
+  10    IN     80 4f 00                                            .O.                     17.1.0        
+  10    IN     90 2d 50                                            .-P                     18.1.0        
+  10    IN     90 51 50                                            .QP                     19.1.0        
+  10    IN     80 51 00 80  2d 00                                  .Q..-.                  20.1.0        
+  10    IN     90 34 50                                            .4P                     21.1.0        
+  10    IN     80 34 00                                            .4.                     22.1.0        
+  10    IN     90 51 50                                            .QP                     23.1.0        
+  10    IN     80 51 00 90  39 50                                  .Q..9P                  24.1.0        
+  10    IN     80 39 00                                            .9.                     25.1.0        
+  10    IN     90 4c 50                                            .LP                     26.1.0        
+  10    IN     90 3b 50                                            .;P                     27.1.0        
+  10    IN     80 4c 00 80  3b 00                                  .L..;.                  28.1.0        
+  10    IN     90 3c 50                                            .<P                     29.1.0        
+  10    IN     80 3c 00                                            .<.                     30.1.0        
+  10    IN     90 4a 50                                            .JP                     31.1.0        
+  10    IN     80 4a 00                                            .J.                     32.1.0        
+  10    IN     90 29 50                                            .)P                     33.1.0        
+  10    IN     90 48 50                                            .HP                     34.1.0        
+  10    IN     80 48 00                                            .H.                     35.1.0        
+  10    IN     80 29 00                                            .).                     36.1.0        
+  10    IN     90 30 50 80  30 00                                  .0P.0.                  37.1.0        
+  10    IN     90 35 50 80  35 00                                  .5P.5.                  38.1.0        
+  10    IN     90 4a 50                                            .JP                     39.1.0        
+  10    IN     90 2b 50                                            .+P                     40.1.0        
+  10    IN     80 4a 00                                            .J.                     41.1.0        
+  10    IN     80 2b 00                                            .+.                     42.1.0        
+  10    IN     90 32 50                                            .2P                     43.1.0        
+  10    IN     80 32 00                                            .2.                     44.1.0        
+  10    IN     90 37 50 80  37 00                                  .7P.7.                  45.1.0        
+  10    IN     90 4c 50                                            .LP                     46.1.0        
+  10    IN     90 30 50                                            .0P                     47.1.0        
+  10    IN     80 4c 00                                            .L.                     48.1.0        
+  10    IN     80 30 00                                            .0.                     49.1.0        
+  10    IN     90 37 50                                            .7P                     50.1.0        
+  10    IN     80 37 00                                            .7.                     51.1.0        
+  10    IN     90 3c 50 80  3c 00                                  .<P.<.                  52.1.0        
