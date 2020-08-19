@@ -1,0 +1,98 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¶ÃVision V5.28.0.0
+Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: hjt hu_jiangtao@126.com, zhenhzhou, LIC=76F8T-RTAAP-QDQKD-8Q2YV-2VWYS-LA1YT
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.28.0.0
+Toolchain Path:  D:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 6 (build 750)
+Assembler:       Armasm.exe V5.06 update 6 (build 750)
+Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
+Library Manager: ArmAr.exe V5.06 update 6 (build 750)
+Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
+CPU DLL:         SARMCM3.DLL V5.28.0.0
+Dialog DLL:      DCM.DLL V1.17.3.0
+Target DLL:      Segger\JL2CM3.dll V2.99.36.0
+Dialog DLL:      TCM.DLL V1.36.2.0
+ 
+<h2>Project:</h2>
+F:\Program\STM32_Program\“Ù¿÷¬•Ã›≥Ã–Ú\USB_MIDI_UC_OS2_20191020\MDK-ARM\usbhost.uvprojx
+Project File Date:  05/19/2020
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
+Build target 'usbhost Configuration'
+compiling GlobalVar.c...
+compiling emcy.c...
+compiling dcf.c...
+compiling lifegrd.c...
+compiling lss.c...
+compiling nmtMaster.c...
+compiling nmtSlave.c...
+compiling objacces.c...
+compiling pdo.c...
+compiling states.c...
+compiling sync.c...
+compiling sdo.c...
+..\Src\CANOpen\CanFestival-3\src\sdo.c(837): warning:  #167-D: argument of type "volatile unsigned char *" is incompatible with parameter of type "unsigned char *"
+  	err = getSDOlineOnUse( d, CliServNbr, whoami, &line );
+..\Src\CANOpen\CanFestival-3\src\sdo.c(984): warning:  #167-D: argument of type "volatile unsigned char *" is incompatible with parameter of type "unsigned char *"
+  				err = getSDOfreeLine( d, whoami, &line );
+..\Src\CANOpen\CanFestival-3\src\sdo.c(1115): warning:  #167-D: argument of type "volatile unsigned char *" is incompatible with parameter of type "unsigned char *"
+  				err = getSDOfreeLine( d, whoami, &line );
+..\Src\CANOpen\CanFestival-3\src\sdo.c(1378): warning:  #167-D: argument of type "volatile unsigned char *" is incompatible with parameter of type "unsigned char *"
+  				    err = getSDOfreeLine( d, whoami, &line );
+..\Src\CANOpen\CanFestival-3\src\sdo.c(1597): warning:  #167-D: argument of type "volatile unsigned char *" is incompatible with parameter of type "unsigned char *"
+  					err = getSDOfreeLine( d, whoami, &line );
+..\Src\CANOpen\CanFestival-3\src\sdo.c: 5 warnings, 0 errors
+compiling ds401.c...
+compiling timer.c...
+..\Src\CANOpen\CanFestival-3\src\timer.c(39): warning:  #68-D: integer conversion resulted in a change of sign
+  s_timer_entry timers[MAX_NB_TIMER] = {{TIMER_NONE, NULL, NULL, 0, 0, 0},};
+..\Src\CANOpen\CanFestival-3\src\timer.c: 1 warning, 0 errors
+compiling can_stm32_hal.c...
+..\Src\CANOpen\CanFestival-3\drivers\STM32\can_stm32_hal.c(271): warning:  #177-D: variable "err"  was declared but never referenced
+  	INT8U err;
+..\Src\CANOpen\CanFestival-3\drivers\STM32\can_stm32_hal.c(340): warning:  #177-D: variable "err"  was declared but never referenced
+  	INT8U err;
+..\Src\CANOpen\CanFestival-3\drivers\STM32\can_stm32_hal.c: 2 warnings, 0 errors
+compiling timer_stm32_hal.c...
+compiling CANOpenObjDictConfig.c...
+compiling SEGGER_RTT.c...
+compiling SEGGER_RTT_printf.c...
+compiling ObjDict.c...
+linking...
+Program Size: Code=97328 RO-data=34844 RW-data=3812 ZI-data=93972  
+FromELF: creating hex file...
+".\usbhost Configuration\usbhost Configuration.axf" - 0 Error(s), 8 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.5.1.pack
+                ARM.CMSIS.5.5.1
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.2.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F2xx_DFP.2.9.0.pack
+                Keil.STM32F2xx_DFP.2.9.0
+                STMicroelectronics STM32F2 Series Device Support, Drivers and Examples
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_usbhost_Configuration
+  E:\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include
+  E:\Arm\Packs\Keil\STM32F2xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.2.0
+Build Time Elapsed:  00:01:17
+</pre>
+</body>
+</html>

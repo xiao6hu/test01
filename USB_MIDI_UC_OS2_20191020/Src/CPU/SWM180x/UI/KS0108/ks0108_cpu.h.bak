@@ -1,0 +1,136 @@
+ï»?*--------------------------------------------------------------------------*/
+/**@file    ks0108_cpu.h
+   @brief   ks0108?¾ç¤º?   @details
+   @author  hjt
+   @date    2017-6-12
+   @note    
+*/
+/*----------------------------------------------------------------------------*/
+#ifndef __KS0108_CPU_H__
+#define __KS0108_CPU_H__
+
+/* Includes ------------------------------------------------------------------*/
+#include "includes.h"
+
+//æ¶²æ™¶æŽ§åˆ¶çº¿
+
+#define LCD_EN_GPIO     GPIOA
+#define LCD_EN_PORT     PORTA
+#define LCD_EN_PIN      PIN0
+
+#define LCD_RW_GPIO     GPIOA
+#define LCD_RW_PORT     PORTA
+#define LCD_RW_PIN      PIN0
+
+
+#define LCD_RS_GPIO     GPIOA
+#define LCD_RS_PORT     PORTA
+#define LCD_RS_PIN      PIN0
+
+#define LCD_CSA_GPIO    GPIOA
+#define LCD_CSA_PORT    PORTA
+#define LCD_CSA_PIN     PIN0
+
+#define LCD_CSB_GPIO    GPIOA
+#define LCD_CSB_PORT    PORTA
+#define LCD_CSB_PIN     PIN0
+
+
+
+//#define LCD_BUS_GPIO  	(GPIO_Pin_7 | GPIO_Pin_6 | GPIO_Pin_5 | GPIO_Pin_4 | GPIO_Pin_3 | GPIO_Pin_2 | GPIO_Pin_1 | GPIO_Pin_0)  
+#define LCD_BUS_PORT    GPIOA
+
+#define LCD_D0_PORT     PORTA
+#define LCD_D1_PORT     PORTA
+#define LCD_D2_PORT     PORTA
+#define LCD_D3_PORT     PORTA
+#define LCD_D4_PORT     PORTA
+#define LCD_D5_PORT     PORTA
+#define LCD_D6_PORT     PORTA
+#define LCD_D7_PORT     PORTA
+
+#define LCD_D0_GPIO     GPIOA
+#define LCD_D1_GPIO     GPIOA
+#define LCD_D2_GPIO     GPIOA
+#define LCD_D3_GPIO     GPIOA
+#define LCD_D4_GPIO     GPIOA
+#define LCD_D5_GPIO     GPIOA
+#define LCD_D6_GPIO     GPIOA
+#define LCD_D7_GPIO     GPIOA
+
+ #define LCD_D0_PIN     PIN0
+ #define LCD_D1_PIN     PIN1
+ #define LCD_D2_PIN     PIN2
+ #define LCD_D3_PIN     PIN3
+ #define LCD_D4_PIN     PIN4
+ #define LCD_D5_PIN     PIN5
+ #define LCD_D6_PIN     PIN6
+ #define LCD_D7_PIN     PIN7
+
+
+
+
+
+void set_lcd_port_in(void);
+void set_lcd_port_out(void);
+void Write_lcd_bus(uint8_t Data);
+uint8_t Read_lcd_bus(void);
+
+
+#define SET_LCD_BUS_IN()     set_lcd_port_in()
+#define SET_LCD_BUS_OUT()    set_lcd_port_out()
+#define WRITE_LCD_BUS(Data)  Write_lcd_bus(Data)
+#define READ_LCD_BUS()       Read_lcd_bus()
+
+
+#define LCD_EN(Status)	GPIO_WriteBit(LCD_EN_PORT , LCD_EN_GPIO, Status)
+#define LCD_RW(Status) 	GPIO_WriteBit(LCD_RW_PORT , LCD_RW_GPIO, Status)
+#define LCD_RS(Status)	GPIO_WriteBit(LCD_RS_PORT , LCD_RS_GPIO, Status)
+
+
+
+#if (LCD_XSIZE == 128)
+//------------------------------------
+//2ä¸//------------------------------------
+//LCD CS A   (CSA = 1 CSB = 0) 
+#define LCD_CSA()\
+	GPIO_SetBit(LCD_CSA_PORT , LCD_CSA_GPIO);\
+	GPIO_ClrBit(LCD_CSB_PORT , LCD_CSB_GPIO)
+	
+//------------------------------------
+//LCD CS B   (CSA = 0 CSB = 1) 
+#define LCD_CSB()\
+	GPIO_ClrBit(LCD_CSA_PORT , LCD_CSA_GPIO);\
+	GPIO_SetBit(LCD_CSB_PORT , LCD_CSB_GPIO)
+#endif
+
+
+#if (LCD_XSIZE == 192)
+//------------------------------------
+//3ä¸//LCD CS A   (CSA = 0 CSB = 0) 
+#define LCD_CSA()\
+	GPIO_ClrBit(LCD_CSA_PORT , LCD_CSA_GPIO);\
+	GPIO_ClrBit(LCD_CSB_PORT , LCD_CSB_GPIO)
+
+//------------------------------------
+//LCD CS B   (CSA = 0 CSB = 1) 
+#define LCD_CSB()\
+	GPIO_ClrBit(LCD_CSA_PORT , LCD_CSA_GPIO);\
+	GPIO_SetBit(LCD_CSB_PORT , LCD_CSB_GPIO)
+//------------------------------------
+//LCD CS B   (CSA = 1 CSB = 0) 
+#define LCD_CSC()\
+	GPIO_SetBit(LCD_CSA_PORT , LCD_CSA_GPIO);\
+	GPIO_ClrBit(LCD_CSB_PORT , LCD_CSB_GPIO)
+#endif
+
+
+//LCD CS Non   (CSA = 1 CSB = 1)
+#define LCD_CS_None()\
+	GPIO_SetBit(LCD_CSA_PORT , LCD_CSA_GPIO);\
+	GPIO_SetBit(LCD_CSB_PORT , LCD_CSB_GPIO)
+
+#endif /* __KS0108_CPU_H__ */
+
+
+

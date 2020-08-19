@@ -1,0 +1,86 @@
+/*--------------------------------------------------------------------------*/
+/**@file     AnalogOutput_cpu.c
+   @brief
+   @details
+   @author   hjt
+   @date     2017-6-12
+   @note
+*/
+/*----------------------------------------------------------------------------*/
+#include "AnalogOutput_cpu.h"
+
+/****************************************************************
+ * 函数名：void AnalogOutput_GPIO_Config(void)  
+ * 描述  ：模拟输出I/O口配置  4_20mA输出口配置
+ * 输入  ：无 
+ * 输出  ：无 
+ ***************************************************************/ 
+void AnalogOutput_GPIO_Config(void)  
+{ 
+	GPIO_InitTypeDef GPIO_InitStructure; 
+
+	/* GPIOA and GPIOB clock enable */ 
+	RCC_APB2PeriphClockCmd(OUT_4_20mA_RCC, ENABLE ); 
+
+	/*GPIOA Configuration: OUT_4_20mA_TIM_NUM channel 1 and 2 as alternate function push-pull */ 
+	
+	GPIO_InitStructure.GPIO_Pin = OUT_4_20mA_GPIO; 
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;           // 复用推挽输出 
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; 
+	GPIO_Init(OUT_4_20mA_PORT, &GPIO_InitStructure); 
+	
+	GPIO_WriteBit(OUT_4_20mA_PORT, OUT_4_20mA_GPIO, Bit_RESET);
+	
+} 
+
+/****************************************************************
+ * 函数名：void AnalogOutput_Configuration(void)  
+ * 描述  ：模拟输出配置 4_20mA输出配置
+ * 输入  ：无 
+ * 输出  ：无 
+ ***************************************************************/
+void AnalogOutput_Configuration(void)
+{  
+    TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;  
+    TIM_OCInitTypeDef  TIM_OCInitStructure; 
+
+	AnalogOutput_GPIO_Config();
+
+	TIM_DeInit(OUT_4_20mA_TIM_NUM);
+    /*PCLK1经过2倍频后作为TIM3的时钟源等于72MHz*/  
+    RCC_APB1PeriphClockCmd(OUT_4_20mA_TIM_RCC, ENABLE);  
+
+    //GPIO_PinRemapConfig(GPIO_FullRemap_TIM1, ENABLE); //Timer3部分重映射  TIM3_CH2->PB5
+
+    /* Time base configuration */                                            
+    TIM_TimeBaseStructure.TIM_Period = 0xFFFF;  
+
+	TIM_TimeBaseStructure.TIM_Prescaler = (36-1);                                    //设置预分频：预分频=0，即为72/35=2MHz  
+    TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;                     //设置时钟分频系数：不分频  
+    TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;                 //向上计数溢出模式  
+    TIM_TimeBaseInit(OUT_4_20mA_TIM_NUM, &TIM_TimeBaseStructure);  
+
+    /* PWM1 Mode configuration: Channel1 */  
+    TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;                           //配置为PWM模式1  
+    TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	
+    TIM_OCInitStructure.TIM_Pulse = 10000;//0x8000;           							//设置跳变值，当计数器计数到这个值时，电平发生跳变 
+	
+    TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;                   //当定时器计数值小于CCR1时为高电平  
+	
+    TIM_OC1Init(OUT_4_20mA_TIM_NUM, &TIM_OCInitStructure);                                    //使能通道1     
+    TIM_OC1PreloadConfig(OUT_4_20mA_TIM_NUM, TIM_OCPreload_Enable); 
+	 
+	 
+	 
+	 
+	TIM_CtrlPWMOutputs(OUT_4_20mA_TIM_NUM, ENABLE); 
+
+    TIM_ARRPreloadConfig(OUT_4_20mA_TIM_NUM, ENABLE);                                         //使能TIM1重载寄存器ARR  
+    /* OUT_4_20mA_TIM_NUM enable counter */  
+    TIM_Cmd(OUT_4_20mA_TIM_NUM, ENABLE);                                                      //使能TIM1  
+
+}
+
+
+
