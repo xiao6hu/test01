@@ -817,6 +817,52 @@ void DispMenuLedColorCycleModeSetEscDown(void);
 void DispMenuLedColorCycleModeSetEscOk(void);
 
 
+//------------------------------------------------------------------		
+//设置游戏失败延时时间初始化
+//------------------------------------------------------------------
+void DispMenuSetGameFailDelayTimeInit(void);
+void DispMenuSetGameFailDelayTimeUp(void);
+void DispMenuSetGameFailDelayTimeDown(void);
+void DispMenuSetGameFailDelayTimeLeft(void);
+void DispMenuSetGameFailDelayTimeRight(void);
+void DispMenuSetGameFailDelayTimeEscUp(void);
+void DispMenuSetGameFailDelayTimeEscDown(void);
+void DispMenuSetGameFailDelayTimeEscOk(void);
+
+//------------------------------------------------------------------		
+//设置游戏等待延时时间
+//------------------------------------------------------------------
+void DispMenuSetGameWaitDelayTimeInit(void);
+void DispMenuSetGameWaitDelayTimeUp(void);
+void DispMenuSetGameWaitDelayTimeDown(void);
+void DispMenuSetGameWaitDelayTimeLeft(void);
+void DispMenuSetGameWaitDelayTimeRight(void);
+void DispMenuSetGameWaitDelayTimeEscUp(void);
+void DispMenuSetGameWaitDelayTimeEscDown(void);
+void DispMenuSetGameWaitDelayTimeEscOk(void);
+
+//------------------------------------------------------------------		
+//设置游戏开始设备地址
+//------------------------------------------------------------------
+void DispMenuSetGameStartDeviceAddrInit(void);
+void DispMenuSetGameStartDeviceAddrUp(void);
+void DispMenuSetGameStartDeviceAddrDown(void);
+void DispMenuSetGameStartDeviceAddrLeft(void);
+void DispMenuSetGameStartDeviceAddrRight(void) ;
+void DispMenuSetGameStartDeviceAddrEscUp(void);
+void DispMenuSetGameStartDeviceAddrEscDown(void);
+void DispMenuSetGameStartDeviceAddrEscOk(void);
+//------------------------------------------------------------------		
+//设置游戏结束设备地址
+//------------------------------------------------------------------
+void DispMenuSetGameEndDeviceAddrInit(void);
+void DispMenuSetGameEndDeviceAddrUp(void);
+void DispMenuSetGameEndDeviceAddrDown(void);
+void DispMenuSetGameEndDeviceAddrLeft(void);
+void DispMenuSetGameEndDeviceAddrRight(void);
+void DispMenuSetGameEndDeviceAddrEscUp(void);
+void DispMenuSetGameEndDeviceAddrEscDown(void);
+void DispMenuSetGameEndDeviceAddrEscOk(void);
 
 
 extern u16 TopMenuResetTimeCnt;
@@ -1639,7 +1685,58 @@ _CONST_ KbdTabStruct KeyTab[]={
 		{486, 0, 0, 0, 0, 0, 0, 0,(*DispMenuLedColorCycleModeSetEscDown)},
 		{487, 0, 0, 0, 0, 0, 0, 0,(*DispMenuLedColorCycleModeSetEscOk)},
 		
-		
+
+		//------------------------------------------------------------------		
+		//{"设置游戏失败延时时间"}菜单功能函数
+		//------------------------------------------------------------------
+		{488,489,490,491,492,493,494,495,(*DispMenuSetGameFailDelayTimeInit)},
+		{489, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameFailDelayTimeUp)},
+		{490, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameFailDelayTimeDown)},
+		{491, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameFailDelayTimeLeft)},
+		{492, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameFailDelayTimeRight)},
+		{493, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameFailDelayTimeEscUp)},
+		{494, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameFailDelayTimeEscDown)},
+		{495, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameFailDelayTimeEscOk)},
+
+		//------------------------------------------------------------------		
+		//{"设置游戏等待延时时间"}菜单功能函数
+		//------------------------------------------------------------------
+		{496,497,498,499,500,501,502,503,(*DispMenuSetGameWaitDelayTimeInit)},
+		{497, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameWaitDelayTimeUp)},
+		{498, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameWaitDelayTimeDown)},
+		{499, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameWaitDelayTimeLeft)},
+		{500, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameWaitDelayTimeRight)},
+		{501, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameWaitDelayTimeEscUp)},
+		{502, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameWaitDelayTimeEscDown)},
+		{503, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameWaitDelayTimeEscOk)},
+
+		//------------------------------------------------------------------		
+		//{"设置游戏开始设备地址"}菜单功能函数
+		//------------------------------------------------------------------
+		{504,505,506,507,508,509,510,511,(*DispMenuSetGameStartDeviceAddrInit)},
+		{505, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameStartDeviceAddrUp)},
+		{506, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameStartDeviceAddrDown)},
+		{507, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameStartDeviceAddrLeft)},
+		{508, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameStartDeviceAddrRight)},
+		{509, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameStartDeviceAddrEscUp)},
+		{510, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameStartDeviceAddrEscDown)},
+		{511, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameStartDeviceAddrEscOk)},
+
+
+		//------------------------------------------------------------------		
+		//{"设置游戏结束设备地址"}菜单功能函数
+		//------------------------------------------------------------------
+		{512,513,514,515,516,517,518,519,(*DispMenuSetGameEndDeviceAddrInit)},
+		{513, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameEndDeviceAddrUp)},
+		{514, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameEndDeviceAddrDown)},
+		{515, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameEndDeviceAddrLeft)},
+		{516, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameEndDeviceAddrRight)},
+		{517, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameEndDeviceAddrEscUp)},
+		{518, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameEndDeviceAddrEscDown)},
+		{519, 0, 0, 0, 0, 0, 0, 0,(*DispMenuSetGameEndDeviceAddrEscOk)},
+
+
+
 		
         #ifdef DynamicBar
         {30,31,32,33,34,(*DispMenuDataInit)}, //"Data"

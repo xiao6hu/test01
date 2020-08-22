@@ -13,75 +13,13 @@ void game(void)
 	switch (GameType)
 	{
 		case 0: game1();break;
-		case 1: break;
+		case 1: game2();break;
 		case 2: break;
 		case 3:	break;
 		case 4: break;
 		default:break;	
 	}
 }
-
-void GameFailure(void)
-{
-	INT8U err;
-	
-	my_strcpy(VoiceBuff, "游戏失败，清按开关重新开始！");
-	//XFS5152CE_SendData(my_strlen(VoiceBuff)+XFS5152CE_CMD_AND_PAR, VOICE_MIX_CMD, GB2313, VoiceBuff);		
-
-	XFS5152CE_Play(XFS5152CE_NON_WAIT_PLAY | XFS5152CE_WAIT_STOP);
-	
-	//OSSemPost(XFS5152CE_SemSignal);
-	//OSTimeDlyHMSM(0,0,1,0);
-	//GameEnd();
-	//OSTimeDlyHMSM(0, 0,2,0);
-	
-	OSFlagPost ((OS_FLAG_GRP *)pFlagGrpMidi,
-				(OS_FLAGS) START_KEY_FLAG,
-				(INT8U) OS_FLAG_CLR,
-				(INT8U  *)&err);
-	
-	TxDeviceCmd(DEFAULT_SLAVE_ADDR,LIGHTS_OFF,
-				(U8)(GROUP1_W_LED_BIT_OFF|
-				GROUP1_R_LED_BIT_OFF|
-				GROUP1_G_LED_BIT_OFF|
-				GROUP1_B_LED_BIT_OFF));
-		
-}
-
-void GameEnd(void)
-{
-	INT8U err;	
-	
-
-	my_strcpy(VoiceBuff, "游戏结束，清按开关重新开始！");
-	XFS5152CE_Play(XFS5152CE_NON_WAIT_PLAY | XFS5152CE_WAIT_STOP);
-	//XFS5152CE_SendData(my_strlen(VoiceBuff)+XFS5152CE_CMD_AND_PAR, VOICE_MIX_CMD, GB2313, VoiceBuff);	
-	//OSSemPost(XFS5152CE_SemSignal);
-	//OSTimeDlyHMSM(0, 0,2,0);
-
-	OSFlagPost ((OS_FLAG_GRP *)pFlagGrpMidi,
-				(OS_FLAGS) START_KEY_FLAG,
-				(INT8U) OS_FLAG_CLR,
-				(INT8U  *)&err);
-	
-	TxDeviceCmd(DEFAULT_SLAVE_ADDR,LIGHTS_OFF,
-				(U8)(GROUP1_W_LED_BIT_OFF|
-				GROUP1_R_LED_BIT_OFF|
-				GROUP1_G_LED_BIT_OFF|
-				GROUP1_B_LED_BIT_OFF));
-	
-}
-
-
-
-
-
-
-
-
-
-
-
 
 
 int SequenListInsert(SequenListTypeDef *L,GameRankingTypeDef *data,int i)

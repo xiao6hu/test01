@@ -541,7 +541,14 @@ u8 analyzeUartPacket()
 					(INT8U) OS_FLAG_SET,
 					(INT8U  *)&err);	
 
-				
+				OSFlagPost ((OS_FLAG_GRP *)pFlagGrpMidi,
+					(OS_FLAGS) START_KEY_FLAG,
+					(INT8U) OS_FLAG_SET,
+					(INT8U  *)&err);	
+
+
+
+
 				//OSTimeDlyHMSM(0, 0,0,100);
 				
 				//TxDeviceCmd(DEFAULT_SLAVE_ADDR,SYNC_CMD,0);

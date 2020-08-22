@@ -242,11 +242,12 @@ typedef struct{
 
 	LedParaStructTypeDef LedPara;
 	
-	
-	
-	
 	LedControlStructTypeDef LedControl;
-		
+
+	u8 GameStartDeviceAddr;
+	u8 GameEndDeviceAddr;
+	u8 GameFailDelayTime;
+	u8 GameWaitDelayTime;	
 }ParametersStructTypeDef;   
 
 
@@ -280,6 +281,11 @@ typedef struct{
 /*U16 ReturnTopTime;*/																	60, \
 /*LedParaStructTypeDef LedPara;*/														{20, 4, 0, 1024, {255, 0, 0},0,LedParaGroupsInit},\
 /*LedControlStructTypeDef LedControl;*/                                                 LedControlStructInit,\
+
+/*u8 GameStartDeviceAddr;*/																1,\
+/*u8 GameEndDeviceAddr;*/																10,\
+/*u8 GameFailDelayTime;*/																30,\
+/*u8 GameWaitDelayTime;*/																15,\
 }											  
 
 

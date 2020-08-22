@@ -7345,4 +7345,444 @@ void DispMenuT1000_TimerEscOk(void)
 	
 }
 
+//------------------------------------------------------------------		
+//设置游戏失败延时时间初始化
+//------------------------------------------------------------------
+void DispMenuSetGameFailDelayTimeInit(void)
+{
+	if(Flash == FlashMode_AutoInit)//从0进入,初始化Item等值
+	{
+        //Item = 0;
+        Where = 0;
+		//-------------------------
+		my_strcpy(ParaSet.MinText, "00");
+		my_strcpy(ParaSet.MaxText, "99");
+		
+		snprintf((char*)&ParaSet.Text[0], 2+1,"%02d", RamSetParameters.GameFailDelayTime);
+		ParaSet.CursorPos=0;
+	}
+	GUI_Clear();
+	GUI_DispStringAtBar(*(Menu_GameModeSet[language].Text+Item),0,1,126,GUI_TA_HCENTER);
+	ParaSetDisplsy(GameFailDelayTime_PosX , GameFailDelayTime_PosY, 126, GUI_TA_HCENTER);
+    GUI_DispStringAt(*(Menu_Unit[language].Text+Unit_S_Index), PosX, PosY);
+}
 
+
+//------------------------------------------------------------------		
+//设置游戏失败延时时间完成
+//------------------------------------------------------------------
+void DispMenuSetGameFailDelayTimeUp(void)
+{
+	U16 GameFailDelayTimeBackup;
+	
+	RamSetParameters.GameFailDelayTime=atoi((char *)ParaSet.Text);
+
+	GameFailDelayTimeBackup = RamSetParameters.GameFailDelayTime;
+
+#ifdef INT_FLASH_SAVE
+       FLASH_WRITE(RamSetParameters.GameFailDelayTime,RamSetParameters.GameFailDelayTime,RamSetParameters.GameFailDelayTime);     
+       FLASH_READ(RamSetParameters.GameFailDelayTime,RamSetParameters.GameFailDelayTime,RamSetParameters.GameFailDelayTime); 
+#endif
+       
+#ifdef EEPROM_SAVE
+       AT24CXX_Write(EepromSetParametersStartAddress+(U32)&RamSetParameters.GameFailDelayTime-(U32)&RamSetParameters,//待写入地址
+                   (uint8_t *)&RamSetParameters.GameFailDelayTime,//待写入数据缓冲区
+                   (sizeof(RamSetParameters.GameFailDelayTime) / sizeof(uint8_t))); //待写入数据长度
+       
+       AT24CXX_Read(EepromSetParametersStartAddress+(U32)&RamSetParameters.GameFailDelayTime-(U32)&RamSetParameters,//待写入地址
+                   (uint8_t *)&RamSetParameters.GameFailDelayTime,//待写入数据缓冲区
+                   (sizeof(RamSetParameters.GameFailDelayTime) / sizeof(uint8_t))); //待写入数据长度
+           
+#endif
+    
+	DisplaySuccessFailure((GameFailDelayTimeBackup == RamSetParameters.GameFailDelayTime) ? 1:0);
+
+	Jump2Menu(SetGameFailDelayTimeIndex,FlashMode_ReFlash);
+}
+
+
+//------------------------------------------------------------------		
+//设置游戏失败延时时间返回
+//------------------------------------------------------------------
+void DispMenuSetGameFailDelayTimeDown(void)
+{
+	POP();
+}
+
+//------------------------------------------------------------------		
+//设置游戏失败延时时间数字加
+//------------------------------------------------------------------
+void DispMenuSetGameFailDelayTimeLeft(void)
+{
+	ParaSetAdd();
+	Jump2Menu(SetGameFailDelayTimeIndex,FlashMode_ReFlash);
+	
+}
+
+//------------------------------------------------------------------		
+//设置游戏失败延时时间光标右移
+//------------------------------------------------------------------
+void DispMenuSetGameFailDelayTimeRight(void) 
+{
+	//ParaSetSub();
+	
+	ParaSetCursorRightMoves();
+	Jump2Menu(SetGameFailDelayTimeIndex,FlashMode_ReFlash);
+}
+
+
+void DispMenuSetGameFailDelayTimeEscUp(void)
+{
+	
+}
+void DispMenuSetGameFailDelayTimeEscDown(void)
+{
+
+}
+void DispMenuSetGameFailDelayTimeEscOk(void)
+{
+	
+}	
+
+
+
+
+
+//------------------------------------------------------------------		
+//设置游戏等待延时时间初始化
+//------------------------------------------------------------------
+void DispMenuSetGameWaitDelayTimeInit(void)
+{
+	if(Flash == FlashMode_AutoInit)//从0进入,初始化Item等值
+	{
+        //Item = 0;
+        Where = 0;
+		//-------------------------
+		my_strcpy(ParaSet.MinText, "00");
+		my_strcpy(ParaSet.MaxText, "99");
+		
+		snprintf((char*)&ParaSet.Text[0], 2+1,"%02d", RamSetParameters.GameWaitDelayTime);
+		ParaSet.CursorPos=0;
+	}
+	GUI_Clear();
+	GUI_DispStringAtBar(*(Menu_GameModeSet[language].Text+Item),0,1,126,GUI_TA_HCENTER);
+	ParaSetDisplsy(GameWaitDelayTime_PosX , GameWaitDelayTime_PosY, 126, GUI_TA_HCENTER);
+    GUI_DispStringAt(*(Menu_Unit[language].Text+Unit_S_Index), PosX, PosY);
+}
+
+
+//------------------------------------------------------------------		
+//设置游戏等待延时时间完成
+//------------------------------------------------------------------
+void DispMenuSetGameWaitDelayTimeUp(void)
+{
+	U16 GameWaitDelayTimeBackup;
+	
+	RamSetParameters.GameWaitDelayTime=atoi((char *)ParaSet.Text);
+
+	GameWaitDelayTimeBackup = RamSetParameters.GameWaitDelayTime;
+
+#ifdef INT_FLASH_SAVE
+       FLASH_WRITE(RamSetParameters.GameWaitDelayTime,RamSetParameters.GameWaitDelayTime,RamSetParameters.GameWaitDelayTime);     
+       FLASH_READ(RamSetParameters.GameWaitDelayTime,RamSetParameters.GameWaitDelayTime,RamSetParameters.GameWaitDelayTime); 
+#endif
+       
+#ifdef EEPROM_SAVE
+       AT24CXX_Write(EepromSetParametersStartAddress+(U32)&RamSetParameters.GameWaitDelayTime-(U32)&RamSetParameters,//待写入地址
+                   (uint8_t *)&RamSetParameters.GameWaitDelayTime,//待写入数据缓冲区
+                   (sizeof(RamSetParameters.GameWaitDelayTime) / sizeof(uint8_t))); //待写入数据长度
+       
+       AT24CXX_Read(EepromSetParametersStartAddress+(U32)&RamSetParameters.GameWaitDelayTime-(U32)&RamSetParameters,//待写入地址
+                   (uint8_t *)&RamSetParameters.GameWaitDelayTime,//待写入数据缓冲区
+                   (sizeof(RamSetParameters.GameWaitDelayTime) / sizeof(uint8_t))); //待写入数据长度
+           
+#endif
+    
+	DisplaySuccessFailure((GameWaitDelayTimeBackup == RamSetParameters.GameWaitDelayTime) ? 1:0);
+
+	Jump2Menu(SetGameWaitDelayTimeIndex,FlashMode_ReFlash);
+}
+
+
+//------------------------------------------------------------------		
+//设置游戏等待延时时间返回
+//------------------------------------------------------------------
+void DispMenuSetGameWaitDelayTimeDown(void)
+{
+	POP();
+}
+
+//------------------------------------------------------------------		
+//设置游戏等待延时时间数字加
+//------------------------------------------------------------------
+void DispMenuSetGameWaitDelayTimeLeft(void)
+{
+	ParaSetAdd();
+	Jump2Menu(SetGameWaitDelayTimeIndex,FlashMode_ReFlash);
+	
+}
+
+//------------------------------------------------------------------		
+//设置游戏等待延时时间光标右移
+//------------------------------------------------------------------
+void DispMenuSetGameWaitDelayTimeRight(void) 
+{
+	//ParaSetSub();
+	
+	ParaSetCursorRightMoves();
+	Jump2Menu(SetGameWaitDelayTimeIndex,FlashMode_ReFlash);
+}
+
+
+void DispMenuSetGameWaitDelayTimeEscUp(void)
+{
+	
+}
+void DispMenuSetGameWaitDelayTimeEscDown(void)
+{
+
+}
+void DispMenuSetGameWaitDelayTimeEscOk(void)
+{
+	
+}	
+
+
+
+
+
+
+//------------------------------------------------------------------		
+//设置游戏开始设备地址初始化
+//------------------------------------------------------------------
+void DispMenuSetGameStartDeviceAddrInit(void)
+{
+	if(Flash == FlashMode_AutoInit)//从0进入,初始化Item等值
+	{
+        //Item = 0;
+        Where = 0;
+		//-------------------------
+		my_strcpy(ParaSet.MinText, "000");
+		my_strcpy(ParaSet.MaxText, "999");
+		
+		snprintf((char*)&ParaSet.Text[0], 3+1,"%03d", RamSetParameters.GameStartDeviceAddr);
+		ParaSet.CursorPos=0;
+	}
+	GUI_Clear();
+	GUI_DispStringAtBar(*(Menu_GameModeSet[language].Text+Item),0,1,126,GUI_TA_HCENTER);
+	ParaSetDisplsy(GameStartDeviceAddr_PosX , GameStartDeviceAddr_PosY, 126, GUI_TA_HCENTER);
+    //GUI_DispStringAt(*(Menu_Unit[language].Text+Unit_PCS_Index), PosX, PosY);
+}
+
+//------------------------------------------------------------------		
+//设置游戏开始设备地址完成
+//------------------------------------------------------------------
+void DispMenuSetGameStartDeviceAddrUp(void)
+{
+	U16 GameStartDeviceAddrBackup;
+	
+	//RamSetParameters.GameStartDeviceAddr=atoi((char *)ParaSet.Text);
+	//GameStartDeviceAddrBackup = RamSetParameters.GameStartDeviceAddr;
+	
+	
+	GameStartDeviceAddrBackup=atoi((char *)ParaSet.Text);
+
+	if (GameStartDeviceAddrBackup >MAX_DEVICE_NUM)
+	{
+		DisplayPromptInfo(*(Menu_PromptInfo[language].Text+0));
+	}
+	else
+	{
+		
+		RamSetParameters.GameStartDeviceAddr=GameStartDeviceAddrBackup;
+		
+		#ifdef INT_FLASH_SAVE
+		FLASH_WRITE(RamSetParameters.GameStartDeviceAddr,RamSetParameters.GameStartDeviceAddr,RamSetParameters.GameStartDeviceAddr); 	
+		FLASH_READ(RamSetParameters.GameStartDeviceAddr,RamSetParameters.GameStartDeviceAddr,RamSetParameters.GameStartDeviceAddr); 
+		#endif
+
+		#ifdef EEPROM_SAVE
+		AT24CXX_Write(EepromSetParametersStartAddress+(U32)&RamSetParameters.GameStartDeviceAddr-(U32)&RamSetParameters,//待写入地址
+					(uint8_t *)&RamSetParameters.GameStartDeviceAddr,//待写入数据缓冲区
+					(sizeof(RamSetParameters.GameStartDeviceAddr) / sizeof(uint8_t))); //待写入数据长度
+		
+		AT24CXX_Read(EepromSetParametersStartAddress+(U32)&RamSetParameters.GameStartDeviceAddr-(U32)&RamSetParameters,//待写入地址
+					(uint8_t *)&RamSetParameters.GameStartDeviceAddr,//待写入数据缓冲区
+					(sizeof(RamSetParameters.GameStartDeviceAddr) / sizeof(uint8_t))); //待写入数据长度
+		
+		#endif
+	   
+		DisplaySuccessFailure((GameStartDeviceAddrBackup == RamSetParameters.GameStartDeviceAddr) ? 1:0);
+	}
+	Jump2Menu(SetGameStartDeviceAddrIndex,FlashMode_ReFlash);
+}
+
+//------------------------------------------------------------------		
+//设置游戏开始设备地址返回
+//------------------------------------------------------------------
+void DispMenuSetGameStartDeviceAddrDown(void)
+{
+	//if ((GlobalKeyVal & (KEY_LONG_UP <<6 ))== (KEY_SHORT_UP <<6 ))
+	{
+		POP();
+	}
+}
+//------------------------------------------------------------------		
+//设置游戏开始设备地址数字加
+//------------------------------------------------------------------
+void DispMenuSetGameStartDeviceAddrLeft(void)
+{
+	ParaSetAdd();
+	
+	Jump2Menu(SetGameStartDeviceAddrIndex,FlashMode_ReFlash);
+	
+}
+
+//------------------------------------------------------------------		
+//设置游戏开始设备地址光标右移
+//------------------------------------------------------------------
+void DispMenuSetGameStartDeviceAddrRight(void) 
+{
+	//ParaSetSub();
+	
+	ParaSetCursorRightMoves();
+
+	Jump2Menu(SetGameStartDeviceAddrIndex,FlashMode_ReFlash);
+}
+
+
+
+void DispMenuSetGameStartDeviceAddrEscUp(void)
+{
+	//ParaSetCursorLeftMoves();
+	//Jump2Menu(SetGameStartDeviceAddrIndex,FlashMode_ReFlash);
+}
+void DispMenuSetGameStartDeviceAddrEscDown(void)
+{
+	//ParaSetCursorRightMoves();
+	//Jump2Menu(SetGameStartDeviceAddrIndex,FlashMode_ReFlash);
+	
+}
+void DispMenuSetGameStartDeviceAddrEscOk(void)
+{
+	
+}	
+
+
+
+
+//------------------------------------------------------------------		
+//设置游戏结束设备地址初始化
+//------------------------------------------------------------------
+void DispMenuSetGameEndDeviceAddrInit(void)
+{
+	if(Flash == FlashMode_AutoInit)//从0进入,初始化Item等值
+	{
+        //Item = 0;
+        Where = 0;
+		//-------------------------
+		my_strcpy(ParaSet.MinText, "000");
+		my_strcpy(ParaSet.MaxText, "999");
+		
+		snprintf((char*)&ParaSet.Text[0], 3+1,"%03d", RamSetParameters.GameEndDeviceAddr);
+		ParaSet.CursorPos=0;
+	}
+	GUI_Clear();
+	GUI_DispStringAtBar(*(Menu_GameModeSet[language].Text+Item),0,1,126,GUI_TA_HCENTER);
+	ParaSetDisplsy(GameEndDeviceAddr_PosX , GameEndDeviceAddr_PosY, 126, GUI_TA_HCENTER);
+    //GUI_DispStringAt(*(Menu_Unit[language].Text+Unit_PCS_Index), PosX, PosY);
+}
+
+//------------------------------------------------------------------		
+//设置游戏结束设备地址完成
+//------------------------------------------------------------------
+void DispMenuSetGameEndDeviceAddrUp(void)
+{
+	U16 GameEndDeviceAddrBackup;
+	
+	//RamSetParameters.GameEndDeviceAddr=atoi((char *)ParaSet.Text);
+	//GameEndDeviceAddrBackup = RamSetParameters.GameEndDeviceAddr;
+	
+	
+	GameEndDeviceAddrBackup=atoi((char *)ParaSet.Text);
+
+	if (GameEndDeviceAddrBackup >MAX_DEVICE_NUM)
+	{
+		DisplayPromptInfo(*(Menu_PromptInfo[language].Text+0));
+	}
+	else
+	{
+		
+		RamSetParameters.GameEndDeviceAddr=GameEndDeviceAddrBackup;
+		
+		#ifdef INT_FLASH_SAVE
+		FLASH_WRITE(RamSetParameters.GameEndDeviceAddr,RamSetParameters.GameEndDeviceAddr,RamSetParameters.GameEndDeviceAddr); 	
+		FLASH_READ(RamSetParameters.GameEndDeviceAddr,RamSetParameters.GameEndDeviceAddr,RamSetParameters.GameEndDeviceAddr); 
+		#endif
+
+		#ifdef EEPROM_SAVE
+		AT24CXX_Write(EepromSetParametersStartAddress+(U32)&RamSetParameters.GameEndDeviceAddr-(U32)&RamSetParameters,//待写入地址
+					(uint8_t *)&RamSetParameters.GameEndDeviceAddr,//待写入数据缓冲区
+					(sizeof(RamSetParameters.GameEndDeviceAddr) / sizeof(uint8_t))); //待写入数据长度
+		
+		AT24CXX_Read(EepromSetParametersStartAddress+(U32)&RamSetParameters.GameEndDeviceAddr-(U32)&RamSetParameters,//待写入地址
+					(uint8_t *)&RamSetParameters.GameEndDeviceAddr,//待写入数据缓冲区
+					(sizeof(RamSetParameters.GameEndDeviceAddr) / sizeof(uint8_t))); //待写入数据长度
+		
+		#endif
+	   
+		DisplaySuccessFailure((GameEndDeviceAddrBackup == RamSetParameters.GameEndDeviceAddr) ? 1:0);
+	}
+	Jump2Menu(SetGameEndDeviceAddrIndex,FlashMode_ReFlash);
+}
+
+//------------------------------------------------------------------		
+//设置游戏结束设备地址返回
+//------------------------------------------------------------------
+void DispMenuSetGameEndDeviceAddrDown(void)
+{
+	//if ((GlobalKeyVal & (KEY_LONG_UP <<6 ))== (KEY_SHORT_UP <<6 ))
+	{
+		POP();
+	}
+}
+//------------------------------------------------------------------		
+//设置游戏结束设备地址数字加
+//------------------------------------------------------------------
+void DispMenuSetGameEndDeviceAddrLeft(void)
+{
+	ParaSetAdd();
+	
+	Jump2Menu(SetGameEndDeviceAddrIndex,FlashMode_ReFlash);
+	
+}
+
+//------------------------------------------------------------------		
+//设置游戏结束设备地址光标右移
+//------------------------------------------------------------------
+void DispMenuSetGameEndDeviceAddrRight(void) 
+{
+	//ParaSetSub();
+	
+	ParaSetCursorRightMoves();
+
+	Jump2Menu(SetGameEndDeviceAddrIndex,FlashMode_ReFlash);
+}
+
+
+
+void DispMenuSetGameEndDeviceAddrEscUp(void)
+{
+	//ParaSetCursorLeftMoves();
+	//Jump2Menu(SetGameEndDeviceAddrIndex,FlashMode_ReFlash);
+}
+void DispMenuSetGameEndDeviceAddrEscDown(void)
+{
+	//ParaSetCursorRightMoves();
+	//Jump2Menu(SetGameEndDeviceAddrIndex,FlashMode_ReFlash);
+	
+}
+void DispMenuSetGameEndDeviceAddrEscOk(void)
+{
+	
+}	

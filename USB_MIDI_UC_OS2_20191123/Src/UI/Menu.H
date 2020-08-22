@@ -443,6 +443,25 @@ extern struct Menu * TipBar;
 #define LedColorCycleModeSet_PosY       4
 
 
+#define GameFailDelayTime_PosX  51-4
+#define GameFailDelayTime_PosY  4
+
+#define GameWaitDelayTime_PosX  51-4
+#define GameWaitDelayTime_PosY  4
+
+
+#define GameStartDeviceAddr_PosX  51
+#define GamStartDeviceAddr_PosY  4
+
+#define GameEndDeviceAddr_PosX  51
+#define GameEndDeviceAddr_PosY  4
+
+
+
+
+
+
+
 
 //-----------------------
 //如下定义从KeyTab中得到
@@ -568,11 +587,10 @@ extern struct Menu * TipBar;
 
 #define LedColorCycleModeSetIndex       480
 
-
-
-
-
-
+#define SetGameFailDelayTimeIndex       488   
+#define SetGameWaitDelayTimeIndex       496
+#define SetGameStartDeviceAddrIndex     504
+#define SetGameEndtDeviceAddrIndex      512
 
 
 

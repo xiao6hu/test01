@@ -52,6 +52,7 @@
 
 #include "game.h"
 #include "game1.h"
+#include "game2.h"
 
 #include "Menu.H"
 

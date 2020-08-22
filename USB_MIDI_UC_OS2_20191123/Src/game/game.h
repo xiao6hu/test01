@@ -26,9 +26,7 @@ extern U8 * _CONST_ DeviceIdToEnglishChar[];
 extern U8 * _CONST_ DeviceIdToChinesePinyin[];
 
 void game(void);
-void GameFailure(void);
-void GameEnd(void);
-
+void game2(void);
 /*
 int SequenListInsert(SequenListTypeDef *L,GameRankingTypeDef *data,int i);
 int SequenListDelete(SequenListTypeDef *L,int i);
@@ -37,9 +35,7 @@ int SequenListCompare(SequenListTypeDef *L,GameRankingTypeDef *data);
 
 
 void GameRankingDataSave(void);
-
 u8 FindRowsDeviceId(u8 RowNumber,u8 Flag);
-
 void GameRankingDataClean(void);
 //int SequenListCompare(SequenListTypeDef *L,GameRankingTypeDef *data);
 #endif	//__GAME_H_

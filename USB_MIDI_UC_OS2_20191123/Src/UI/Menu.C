@@ -476,7 +476,7 @@ U8 * _CONST_ SayModeSetEN[]=
 U8 * _CONST_ GameSelectCN[]=
 {
 	{"跳房子"},
-	{"游戏2"},
+	{"追光跑道"},
 	{"游戏3"},
 	{"游戏4"},
 	{"游戏5"},
@@ -485,7 +485,7 @@ U8 * _CONST_ GameSelectCN[]=
 U8 * _CONST_ GameSelectEN[]=
 {
 	{"Jumping house"},
-	{"Game2"},
+	{"Track track"},
 	{"Game3"},
 	{"Game4"},
 	{"Game5"},
@@ -500,6 +500,13 @@ U8 * _CONST_ GameModeSetCN[]=
 	{"设置提示音排号"},
 	{"游戏通关时间"},
 	{"语音提示时间"},
+
+	{"设置游戏失败时间"},
+	{"设置游戏等待时间"},
+	{"设置游戏开始地址"},
+	{"设置游戏结束地址"},	
+
+
 };
 
 U8 * _CONST_ GameModeSetEN[]=
@@ -509,6 +516,12 @@ U8 * _CONST_ GameModeSetEN[]=
 	{"SetBeepRowNum"},
 	{"GamePassTime"},
 	{"VoicePromptTime"},
+
+	{"SetGameFailTime"},
+	{"SetGameWaitTime"},
+	{"SetGameStartAddr"},
+	{"SetGameEndAddr"},
+
 };
 
 

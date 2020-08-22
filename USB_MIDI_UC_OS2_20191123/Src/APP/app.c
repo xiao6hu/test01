@@ -509,12 +509,14 @@ void MyTimr2Callback (OS_TMR *ptmr, void *p_arg)
 
 void Task_Game(void *p_arg)
 {
-	INT8U err;
+	//INT8U err;
 	//INT32U ticks;
+	
 	(void)p_arg; 
 	
     while (1)
-    {	
+    {
+		/*	
 		OSFlagPend ((OS_FLAG_GRP *)pFlagGrpMidi,
 					(OS_FLAGS) START_KEY_FLAG ,
 					(INT8U )OS_FLAG_WAIT_SET_ALL,
@@ -552,6 +554,10 @@ void Task_Game(void *p_arg)
 		my_strcpy(VoiceBuff, "请做好准备，游戏开始");
 
 		XFS5152CE_Play(XFS5152CE_NON_WAIT_PLAY | XFS5152CE_NON_WAIT_STOP);
+
+*/
+
+
 		//OSTimeDlyHMSM(0, 0,3,0);
 		//OSSemPost(XFS5152CE_SemSignal);
 		

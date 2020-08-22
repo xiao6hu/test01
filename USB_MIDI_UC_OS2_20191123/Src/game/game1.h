@@ -3,6 +3,10 @@
 #include "includes.h"
 
 void game1(void);
+void Game1Failure(void);
+void Game1End(void);
+
+
 
 //u8 GameRankingCmp(GameRankingTypeDef *GameRanking);
 

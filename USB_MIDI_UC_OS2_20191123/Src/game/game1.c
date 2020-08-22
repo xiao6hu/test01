@@ -42,8 +42,46 @@ void game1(void)
 	
 	//u8 GameCycleFlag=0;
 	
-	
-	
+
+
+	OSFlagPend ((OS_FLAG_GRP *)pFlagGrpMidi,
+				(OS_FLAGS) START_KEY_FLAG ,
+				(INT8U )OS_FLAG_WAIT_SET_ALL,
+				(INT32U) 0,
+				(INT8U *)&err);
+
+
+	MIDI_StopPlayFlag=0;
+	MIDI_PlayFlag =0;
+
+	MIDI_StopFlag =0;
+	MIDI_AutoPlayFlag =0;	
+	MIDI_AutoPlayCnt =0;
+	Midi_AutoLightsCnt=0;
+
+
+
+	OSFlagPost ((OS_FLAG_GRP *)pFlagGrpMidi,
+		(OS_FLAGS) MIDI_STOP_FLAG| MIDI_AUTO_PLAY_FLAG | MIDI_STOP_PLAY_FLAG | AUTO_LIGHT_FLAG,
+		(INT8U) OS_FLAG_CLR,
+		(INT8U  *)&err);	
+
+	Cycles=0;
+	Status=0;
+	flag=0;
+
+	TxDeviceCmd(DEFAULT_SLAVE_ADDR,LIGHTS_OFF,
+			(U8)(GROUP1_W_LED_BIT_OFF|
+			GROUP1_R_LED_BIT_OFF|
+			GROUP1_G_LED_BIT_OFF|
+			GROUP1_B_LED_BIT_OFF));
+
+	OSTimeDlyHMSM(0, 0,0,100);
+
+	my_strcpy(VoiceBuff, "请做好准备，游戏开始");
+
+	XFS5152CE_Play(XFS5152CE_NON_WAIT_PLAY | XFS5152CE_NON_WAIT_STOP);
+
 	Timr2=OSTmrCreate (0,
 					(RamSetParameters.GamePassTime*1000/10),
 					OS_TMR_OPT_ONE_SHOT,
@@ -552,3 +590,53 @@ void game1(void)
 }
 
 
+void Game1Failure(void)
+{
+	INT8U err;
+	
+	my_strcpy(VoiceBuff, "游戏失败，清按开关重新开始！");
+	//XFS5152CE_SendData(my_strlen(VoiceBuff)+XFS5152CE_CMD_AND_PAR, VOICE_MIX_CMD, GB2313, VoiceBuff);		
+
+	XFS5152CE_Play(XFS5152CE_NON_WAIT_PLAY | XFS5152CE_WAIT_STOP);
+	
+	//OSSemPost(XFS5152CE_SemSignal);
+	//OSTimeDlyHMSM(0,0,1,0);
+	//GameEnd();
+	//OSTimeDlyHMSM(0, 0,2,0);
+	
+	OSFlagPost ((OS_FLAG_GRP *)pFlagGrpMidi,
+				(OS_FLAGS) START_KEY_FLAG,
+				(INT8U) OS_FLAG_CLR,
+				(INT8U  *)&err);
+	
+	TxDeviceCmd(DEFAULT_SLAVE_ADDR,LIGHTS_OFF,
+				(U8)(GROUP1_W_LED_BIT_OFF|
+				GROUP1_R_LED_BIT_OFF|
+				GROUP1_G_LED_BIT_OFF|
+				GROUP1_B_LED_BIT_OFF));
+		
+}
+
+void Game1End(void)
+{
+	INT8U err;	
+	
+
+	my_strcpy(VoiceBuff, "游戏结束，清按开关重新开始！");
+	XFS5152CE_Play(XFS5152CE_NON_WAIT_PLAY | XFS5152CE_WAIT_STOP);
+	//XFS5152CE_SendData(my_strlen(VoiceBuff)+XFS5152CE_CMD_AND_PAR, VOICE_MIX_CMD, GB2313, VoiceBuff);	
+	//OSSemPost(XFS5152CE_SemSignal);
+	//OSTimeDlyHMSM(0, 0,2,0);
+
+	OSFlagPost ((OS_FLAG_GRP *)pFlagGrpMidi,
+				(OS_FLAGS) START_KEY_FLAG,
+				(INT8U) OS_FLAG_CLR,
+				(INT8U  *)&err);
+	
+	TxDeviceCmd(DEFAULT_SLAVE_ADDR,LIGHTS_OFF,
+				(U8)(GROUP1_W_LED_BIT_OFF|
+				GROUP1_R_LED_BIT_OFF|
+				GROUP1_G_LED_BIT_OFF|
+				GROUP1_B_LED_BIT_OFF));
+	
+}
