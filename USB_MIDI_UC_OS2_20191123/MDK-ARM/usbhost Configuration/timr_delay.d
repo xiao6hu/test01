@@ -121,3 +121,4 @@
 .\usbhost configuration\timr_delay.o: ..\Src\XFS5152CE\XFS5152CE.h
 .\usbhost configuration\timr_delay.o: ..\Src\game\game.h
 .\usbhost configuration\timr_delay.o: ..\Src\game\game1.h
+.\usbhost configuration\timr_delay.o: ..\Src\game\game2.h

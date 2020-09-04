@@ -121,6 +121,7 @@
 .\usbhost configuration\app.o: ..\Src\XFS5152CE\XFS5152CE.h
 .\usbhost configuration\app.o: ..\Src\game\game.h
 .\usbhost configuration\app.o: ..\Src\game\game1.h
+.\usbhost configuration\app.o: ..\Src\game\game2.h
 .\usbhost configuration\app.o: ..\Src\MCO\mco.h
 .\usbhost configuration\app.o: ..\Src\MCO\mcohw.h
 .\usbhost configuration\app.o: ..\Src\CANOpen\CanFestival-3\include\ds401.h

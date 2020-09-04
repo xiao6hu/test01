@@ -92,6 +92,9 @@ void BSP_Init(void)
 	MX_GPIO_Init();
 	MX_USB_HOST_Init();
 	
+	
+	
+	
 	MX_USART2_UART_Init();
 	
 	//MX_FATFS_Init();
@@ -102,6 +105,7 @@ void BSP_Init(void)
 	//USART1_Config();
 	
 	XFS5152CE_Config();
+	
 	UART4_Config();
 	/*init the Canopen thread*/
 	

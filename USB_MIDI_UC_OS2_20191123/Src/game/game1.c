@@ -137,7 +137,7 @@ void game1(void)
 			}
 			if (err== OS_ERR_TIMEOUT)
 			{
-				GameEnd();	
+				Game1End();	
 				return;
 			}
 			/*
@@ -215,7 +215,7 @@ void game1(void)
 				{
 					if ((RowNumberBackup == p_msg->addr)||(p_msg->addr==0x00))
 					{
-						GameFailure(); 
+						Game1Failure(); 
 						return;
 					}		
 				}
@@ -333,7 +333,7 @@ void game1(void)
 			p_msg = ((UartProtocl *)OSQPend(GAME_RX_Q, (RamSetParameters.GamePassTime+1)*1000, &err));
 			if (err== OS_ERR_TIMEOUT)
 			{
-				GameEnd();	
+				Game1End();	
 				return;
 			}
 			/*
@@ -446,7 +446,7 @@ void game1(void)
 				{
 					if ((RowNumberBackup == p_msg->addr)||(p_msg->addr==0x00))
 					{
-						GameFailure(); 
+						Game1Failure(); 
 						return;
 					}		
 				}

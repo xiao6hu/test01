@@ -2113,8 +2113,46 @@ void DispMenuGameModeSetUp(void)
 		  break;
 	  }
 	  
+	  case 5:{//PUSH  -->POP
+		  PUSH();
+		  Jump2Menu(SetGameFailDelayTimeIndex,FlashMode_AutoInit);
+		  break;
+	  }
+	  
+	  case 6:{//PUSH  -->POP
+		  PUSH();
+		  Jump2Menu(SetGameWaitDelayTimeIndex,FlashMode_AutoInit);
+		  break;
+	  }
 	  
 	  
+	  case 7:{//PUSH  -->POP
+		  PUSH();
+		  Jump2Menu(SetGameStartDeviceAddrIndex,FlashMode_AutoInit);
+		  break;
+	  }
+	  
+	  case 8:{//PUSH  -->POP
+		  PUSH();
+		  Jump2Menu(SetGameEndDeviceAddrIndex,FlashMode_AutoInit);
+		  break;
+	  }
+	  
+	  case 9:{//PUSH  -->POP
+		  PUSH();
+		  Jump2Menu(Config_GameGoodUseTimeIndex,FlashMode_AutoInit);
+		  break;
+	  }
+	  
+	  case 10:{//PUSH  -->POP
+		  PUSH();
+		  Jump2Menu(Config_GameBadUseTimeIndex,FlashMode_AutoInit);
+		  break;
+	  }
+
+
+
+
 	  default:{
 		  Jump2Menu(SelfMenuIndex,FlashMode_NoAction);
 		  return;
@@ -7785,4 +7823,232 @@ void DispMenuSetGameEndDeviceAddrEscDown(void)
 void DispMenuSetGameEndDeviceAddrEscOk(void)
 {
 	
-}	
+}
+
+
+
+
+
+//------------------------------------------------------------------		
+//设置追光跑道游戏优使用时间范围初始化
+//------------------------------------------------------------------
+void DispMenuConfigGameGoodUseTimeInit(void)
+{
+	char StringBuff[16+1];
+	
+	if(Flash == FlashMode_AutoInit)//从0进入,初始化Item等值
+	{
+        //Item = 0;
+        Where = 0;
+		//-------------------------
+		my_strcpy(ParaSet.MinText, "00-00");
+		my_strcpy(ParaSet.MaxText, "99-99");
+		
+		snprintf((char*)&ParaSet.Text[0], 2+1,"%02d", RamSetParameters.GameGoodUseTimeStart);
+		ParaSet.Text[2]='-';
+		snprintf((char*)&ParaSet.Text[3], 2+1,"%02d", RamSetParameters.GameGoodUseTimeEnd);
+		ParaSet.CursorPos=0;
+	}
+	GUI_Clear();
+	GUI_DispStringAtBar(*(Menu_GameModeSet[language].Text+Item),0,1,126,GUI_TA_HCENTER);
+	ParaSetDisplsy(Config_GameGoodUseTime_PosX , Config_GameGoodUseTime_PosY, 126, GUI_TA_HCENTER);	
+	GUI_DispStringAt(*(Menu_Unit[language].Text+Unit_S_Index), PosX, PosY);
+}
+	
+
+
+void DispMenuConfigGameGoodUseTimeUp(void)
+{
+	char StringBuff[16+1];
+	U8 GameGoodUseTimeStartBackup;
+	U8 GameGoodUseTimeEndBackup;
+
+	my_strncpy(StringBuff,&ParaSet.Text[0],2);
+	RamSetParameters.GameGoodUseTimeStart=atoi(StringBuff);
+
+	my_strncpy(StringBuff,&ParaSet.Text[3],2);
+	RamSetParameters.GameGoodUseTimeEnd=atoi(StringBuff);
+	GameGoodUseTimeStartBackup = RamSetParameters.GameGoodUseTimeStart;
+	GameGoodUseTimeEndBackup = RamSetParameters.GameGoodUseTimeEnd;
+
+
+	/*
+	#ifdef INT_FLASH_SAVE
+		FLASH_WRITE(RamSetParameters.GameFailDelayTime,RamSetParameters.GameFailDelayTime,RamSetParameters.GameFailDelayTime);	  
+		FLASH_READ(RamSetParameters.GameFailDelayTime,RamSetParameters.GameFailDelayTime,RamSetParameters.GameFailDelayTime); 
+	#endif
+	*/	
+	#ifdef EEPROM_SAVE
+		AT24CXX_Write(EepromSetParametersStartAddress+(U32)&RamSetParameters.GameGoodUseTimeStart-(U32)&RamSetParameters,//待写入地址
+					(uint8_t *)&RamSetParameters.GameGoodUseTimeStart,//待写入数据缓冲区
+					(sizeof(RamSetParameters.GameGoodUseTimeStart) / sizeof(uint8_t))); //待写入数据长度
+
+		AT24CXX_Write(EepromSetParametersStartAddress+(U32)&RamSetParameters.GameGoodUseTimeEnd-(U32)&RamSetParameters,//待写入地址
+					(uint8_t *)&RamSetParameters.GameGoodUseTimeEnd,//待写入数据缓冲区
+					(sizeof(RamSetParameters.GameGoodUseTimeEnd) / sizeof(uint8_t))); //待写入数据长度
+					
+		AT24CXX_Read(EepromSetParametersStartAddress+(U32)&RamSetParameters.GameGoodUseTimeStart-(U32)&RamSetParameters,//待写入地址
+					(uint8_t *)&RamSetParameters.GameGoodUseTimeStart,//待写入数据缓冲区
+					(sizeof(RamSetParameters.GameGoodUseTimeStart) / sizeof(uint8_t))); //待写入数据长度
+
+		AT24CXX_Read(EepromSetParametersStartAddress+(U32)&RamSetParameters.GameGoodUseTimeEnd-(U32)&RamSetParameters,//待写入地址
+					(uint8_t *)&RamSetParameters.GameGoodUseTimeEnd,//待写入数据缓冲区
+					(sizeof(RamSetParameters.GameGoodUseTimeEnd) / sizeof(uint8_t))); //待写入数据长度		
+	#endif
+	
+	DisplaySuccessFailure(((GameGoodUseTimeStartBackup == RamSetParameters.GameGoodUseTimeStart) && (GameGoodUseTimeEndBackup == RamSetParameters.GameGoodUseTimeEnd)) ? 1:0);
+	Jump2Menu(Config_GameGoodUseTimeIndex,FlashMode_ReFlash);
+}
+
+
+void DispMenuConfigGameGoodUseTimeDown(void)
+{
+	POP();	
+}
+
+void DispMenuConfigGameGoodUseTimeLeft(void)
+{
+	ParaSetAdd();
+	Jump2Menu(Config_GameGoodUseTimeIndex,FlashMode_ReFlash);	
+}
+
+void DispMenuConfigGameGoodUseTimeRight(void)
+{
+	ParaSetCursorRightMoves();
+	Jump2Menu(Config_GameGoodUseTimeIndex,FlashMode_ReFlash);	
+}
+void DispMenuConfigGameGoodUseTimeEscUp(void)
+{
+	
+}
+void DispMenuConfigGameGoodUseTimeEscDown(void)
+{
+	
+}
+void DispMenuConfigGameGoodUseTimeEscOk(void)
+{
+	
+}
+
+
+
+
+
+
+
+
+
+//------------------------------------------------------------------		
+//设置追光跑道游戏差使用时间范围初始化
+//------------------------------------------------------------------
+void DispMenuConfigGameBadUseTimeInit(void)
+{
+	char StringBuff[16+1];
+	
+	if(Flash == FlashMode_AutoInit)//从0进入,初始化Item等值
+	{
+        //Item = 0;
+        Where = 0;
+		//-------------------------
+		my_strcpy(ParaSet.MinText, "00-00");
+		my_strcpy(ParaSet.MaxText, "99-99");
+		
+		snprintf((char*)&ParaSet.Text[0], 2+1,"%02d", RamSetParameters.GameBadUseTimeStart);
+		ParaSet.Text[2]='-';
+		snprintf((char*)&ParaSet.Text[3], 2+1,"%02d", RamSetParameters.GameBadUseTimeEnd);
+		ParaSet.CursorPos=0;
+	}
+	GUI_Clear();
+	GUI_DispStringAtBar(*(Menu_GameModeSet[language].Text+Item),0,1,126,GUI_TA_HCENTER);
+	ParaSetDisplsy(Config_GameBadUseTime_PosX , Config_GameBadUseTime_PosY, 126, GUI_TA_HCENTER);	
+	GUI_DispStringAt(*(Menu_Unit[language].Text+Unit_S_Index), PosX, PosY);
+}
+	
+
+
+void DispMenuConfigGameBadUseTimeUp(void)
+{
+	char StringBuff[16+1];
+	U8 GameBadUseTimeStartBackup;
+	U8 GameBadUseTimeEndBackup;
+
+	my_strncpy(StringBuff,&ParaSet.Text[0],2);
+	RamSetParameters.GameBadUseTimeStart=atoi(StringBuff);
+
+	my_strncpy(StringBuff,&ParaSet.Text[3],2);
+	RamSetParameters.GameBadUseTimeEnd=atoi(StringBuff);
+	GameBadUseTimeStartBackup = RamSetParameters.GameBadUseTimeStart;
+	GameBadUseTimeEndBackup = RamSetParameters.GameBadUseTimeEnd;
+
+
+	/*
+	#ifdef INT_FLASH_SAVE
+		FLASH_WRITE(RamSetParameters.GameFailDelayTime,RamSetParameters.GameFailDelayTime,RamSetParameters.GameFailDelayTime);	  
+		FLASH_READ(RamSetParameters.GameFailDelayTime,RamSetParameters.GameFailDelayTime,RamSetParameters.GameFailDelayTime); 
+	#endif
+	*/	
+	#ifdef EEPROM_SAVE
+		AT24CXX_Write(EepromSetParametersStartAddress+(U32)&RamSetParameters.GameBadUseTimeStart-(U32)&RamSetParameters,//待写入地址
+					(uint8_t *)&RamSetParameters.GameBadUseTimeStart,//待写入数据缓冲区
+					(sizeof(RamSetParameters.GameBadUseTimeStart) / sizeof(uint8_t))); //待写入数据长度
+
+		AT24CXX_Write(EepromSetParametersStartAddress+(U32)&RamSetParameters.GameBadUseTimeEnd-(U32)&RamSetParameters,//待写入地址
+					(uint8_t *)&RamSetParameters.GameBadUseTimeEnd,//待写入数据缓冲区
+					(sizeof(RamSetParameters.GameBadUseTimeEnd) / sizeof(uint8_t))); //待写入数据长度
+					
+		AT24CXX_Read(EepromSetParametersStartAddress+(U32)&RamSetParameters.GameBadUseTimeStart-(U32)&RamSetParameters,//待写入地址
+					(uint8_t *)&RamSetParameters.GameBadUseTimeStart,//待写入数据缓冲区
+					(sizeof(RamSetParameters.GameBadUseTimeStart) / sizeof(uint8_t))); //待写入数据长度
+
+		AT24CXX_Read(EepromSetParametersStartAddress+(U32)&RamSetParameters.GameBadUseTimeEnd-(U32)&RamSetParameters,//待写入地址
+					(uint8_t *)&RamSetParameters.GameBadUseTimeEnd,//待写入数据缓冲区
+					(sizeof(RamSetParameters.GameBadUseTimeEnd) / sizeof(uint8_t))); //待写入数据长度		
+	#endif
+	
+	DisplaySuccessFailure(((GameBadUseTimeStartBackup == RamSetParameters.GameBadUseTimeStart) && (GameBadUseTimeEndBackup == RamSetParameters.GameBadUseTimeEnd)) ? 1:0);
+	Jump2Menu(Config_GameBadUseTimeIndex,FlashMode_ReFlash);
+}
+
+
+void DispMenuConfigGameBadUseTimeDown(void)
+{
+	POP();	
+}
+
+void DispMenuConfigGameBadUseTimeLeft(void)
+{
+	ParaSetAdd();
+	Jump2Menu(Config_GameBadUseTimeIndex,FlashMode_ReFlash);	
+}
+
+void DispMenuConfigGameBadUseTimeRight(void)
+{
+	ParaSetCursorRightMoves();
+	Jump2Menu(Config_GameBadUseTimeIndex,FlashMode_ReFlash);	
+}
+void DispMenuConfigGameBadUseTimeEscUp(void)
+{
+	
+}
+void DispMenuConfigGameBadUseTimeEscDown(void)
+{
+	
+}
+void DispMenuConfigGameBadUseTimeEscOk(void)
+{
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

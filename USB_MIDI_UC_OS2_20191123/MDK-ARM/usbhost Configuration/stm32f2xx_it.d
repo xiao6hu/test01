@@ -122,4 +122,5 @@
 .\usbhost configuration\stm32f2xx_it.o: ..\Src\XFS5152CE\XFS5152CE.h
 .\usbhost configuration\stm32f2xx_it.o: ..\Src\game\game.h
 .\usbhost configuration\stm32f2xx_it.o: ..\Src\game\game1.h
+.\usbhost configuration\stm32f2xx_it.o: ..\Src\game\game2.h
 .\usbhost configuration\stm32f2xx_it.o: .\RTE\_usbhost_Configuration\RTE_Components.h

@@ -121,3 +121,4 @@
 .\usbhost configuration\rtc.o: ..\Src\XFS5152CE\XFS5152CE.h
 .\usbhost configuration\rtc.o: ..\Src\game\game.h
 .\usbhost configuration\rtc.o: ..\Src\game\game1.h
+.\usbhost configuration\rtc.o: ..\Src\game\game2.h

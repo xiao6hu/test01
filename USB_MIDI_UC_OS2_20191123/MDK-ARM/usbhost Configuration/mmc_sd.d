@@ -121,5 +121,6 @@
 .\usbhost configuration\mmc_sd.o: ..\Src\XFS5152CE\XFS5152CE.h
 .\usbhost configuration\mmc_sd.o: ..\Src\game\game.h
 .\usbhost configuration\mmc_sd.o: ..\Src\game\game1.h
+.\usbhost configuration\mmc_sd.o: ..\Src\game\game2.h
 .\usbhost configuration\mmc_sd.o: ..\Src\SPI\spi_hal.h
 .\usbhost configuration\mmc_sd.o: ..\Src\SYSTEM\usart\usart.h

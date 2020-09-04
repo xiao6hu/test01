@@ -121,5 +121,6 @@
 .\usbhost configuration\key.o: ..\Src\XFS5152CE\XFS5152CE.h
 .\usbhost configuration\key.o: ..\Src\game\game.h
 .\usbhost configuration\key.o: ..\Src\game\game1.h
+.\usbhost configuration\key.o: ..\Src\game\game2.h
 .\usbhost configuration\key.o: ..\Src\KEY\io_key_tab.h
 .\usbhost configuration\key.o: ..\Src\midi\Keyboard.h

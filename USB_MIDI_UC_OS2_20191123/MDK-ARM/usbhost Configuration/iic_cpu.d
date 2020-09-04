@@ -122,3 +122,4 @@
 .\usbhost configuration\iic_cpu.o: ..\Src\XFS5152CE\XFS5152CE.h
 .\usbhost configuration\iic_cpu.o: ..\Src\game\game.h
 .\usbhost configuration\iic_cpu.o: ..\Src\game\game1.h
+.\usbhost configuration\iic_cpu.o: ..\Src\game\game2.h

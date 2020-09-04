@@ -7,10 +7,10 @@
 #include "game.h"
 
 
-unsigned char GameType=0;
+//unsigned char GameType=0;
 void game(void)
 {
-	switch (GameType)
+	switch (RamSetParameters.GameSelect)
 	{
 		case 0: game1();break;
 		case 1: game2();break;

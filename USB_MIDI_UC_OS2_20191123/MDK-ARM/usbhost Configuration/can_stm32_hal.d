@@ -126,3 +126,4 @@
 .\usbhost configuration\can_stm32_hal.o: ..\Src\XFS5152CE\XFS5152CE.h
 .\usbhost configuration\can_stm32_hal.o: ..\Src\game\game.h
 .\usbhost configuration\can_stm32_hal.o: ..\Src\game\game1.h
+.\usbhost configuration\can_stm32_hal.o: ..\Src\game\game2.h

@@ -121,4 +121,5 @@
 .\usbhost configuration\ledcontrol.o: ..\Src\XFS5152CE\XFS5152CE.h
 .\usbhost configuration\ledcontrol.o: ..\Src\game\game.h
 .\usbhost configuration\ledcontrol.o: ..\Src\game\game1.h
+.\usbhost configuration\ledcontrol.o: ..\Src\game\game2.h
 .\usbhost configuration\ledcontrol.o: ..\Src\CRC16\CRC16.h

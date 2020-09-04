@@ -39,6 +39,16 @@ AT24CXX_Read(EepromSetParametersStartAddress+(U32)&RamSetParameters.MusicDelayTi
 #define CHINESE_PIN_YIN_MODE  1
 
 
+
+typedef struct{ 
+    char TextNumber[2];       //语音文本编号
+	char Textlength[4];		 //语音文本长度
+	char *TextData;		 //语音文本数据指针
+}VoiceTextTypeDef;
+
+extern char* GameVoice[10];
+
+
 typedef struct
 {
   U16 MusicStatus     : 1;                          //0
@@ -248,6 +258,12 @@ typedef struct{
 	u8 GameEndDeviceAddr;
 	u8 GameFailDelayTime;
 	u8 GameWaitDelayTime;	
+
+	u8 GameGoodUseTimeStart;
+	u8 GameGoodUseTimeEnd;
+	u8 GameBadUseTimeStart;
+	u8 GameBadUseTimeEnd;
+
 }ParametersStructTypeDef;   
 
 
@@ -274,18 +290,21 @@ typedef struct{
 /*U8 SetBeepRowNum;*/																	255,\
 /*U8 GamePassTime;*/																	5,\
 /*U32 VoicePromptTime;*/																300,\
-/*int GameRankingNumber;*/																0,\
+/*int GameRankingNumber;*/																1,\
 /*GameRankingTypeDef GameRanking[MAX_GAME_RANKING_NUMBER+1];*/							DEFAULT_GAME_RANKING_PARAMETERS,\
 /*U8 GameSelect;*/																		0,\
 /*CAN_DeviceTotalTypeDef CAN_DeviceTotal;*/												DEFAULT_CAN_DEVICE_TOTA_PARAMETERS,\
 /*U16 ReturnTopTime;*/																	60, \
 /*LedParaStructTypeDef LedPara;*/														{20, 4, 0, 1024, {255, 0, 0},0,LedParaGroupsInit},\
 /*LedControlStructTypeDef LedControl;*/                                                 LedControlStructInit,\
-
 /*u8 GameStartDeviceAddr;*/																1,\
 /*u8 GameEndDeviceAddr;*/																10,\
 /*u8 GameFailDelayTime;*/																30,\
 /*u8 GameWaitDelayTime;*/																15,\
+/*u8 GameGoodUseTimeStart;*/															15,\
+/*u8 GameGoodUseTimeEnd;*/																20,\
+/*u8 GameBadUseTimeStart;*/																20,\
+/*u8 GameBadUseTimeEnd;*/																99,\
 }											  
 
 
@@ -312,5 +331,15 @@ u8 GameRankingCmp(GameRankingTypeDef *GameRanking);
 void SlaveParaSet(void);
 
 void ParaUpdate(void);
+
+u8 Get_ExtMemoryData(void);
+
+
+
+
+
+
+
+
 #endif
 

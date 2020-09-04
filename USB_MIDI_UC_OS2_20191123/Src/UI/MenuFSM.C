@@ -864,6 +864,31 @@ void DispMenuSetGameEndDeviceAddrEscUp(void);
 void DispMenuSetGameEndDeviceAddrEscDown(void);
 void DispMenuSetGameEndDeviceAddrEscOk(void);
 
+//------------------------------------------------------------------		
+//设置追光跑道游戏优使用时间范围初始化
+//------------------------------------------------------------------
+void DispMenuConfigGameGoodUseTimeInit(void);
+void DispMenuConfigGameGoodUseTimeUp(void);
+void DispMenuConfigGameGoodUseTimeDown(void);
+void DispMenuConfigGameGoodUseTimeLeft(void);
+void DispMenuConfigGameGoodUseTimeRight(void);
+void DispMenuConfigGameGoodUseTimeEscUp(void);
+void DispMenuConfigGameGoodUseTimeEscDown(void);
+void DispMenuConfigGameGoodUseTimeEscOk(void);
+
+//------------------------------------------------------------------		
+//设置追光跑道游戏差使用时间范围初始化
+//------------------------------------------------------------------
+void DispMenuConfigGameBadUseTimeInit(void);
+void DispMenuConfigGameBadUseTimeUp(void);
+void DispMenuConfigGameBadUseTimeDown(void);
+void DispMenuConfigGameBadUseTimeLeft(void);
+void DispMenuConfigGameBadUseTimeRight(void);
+void DispMenuConfigGameBadUseTimeEscUp(void);
+void DispMenuConfigGameBadUseTimeEscDown(void);
+void DispMenuConfigGameBadUseTimeEscOk(void);
+
+
 
 extern u16 TopMenuResetTimeCnt;
 
@@ -1737,6 +1762,29 @@ _CONST_ KbdTabStruct KeyTab[]={
 
 
 
+		//------------------------------------------------------------------		
+		//设置追光跑道游戏优使用时间范围初始化
+		//------------------------------------------------------------------
+		{520,521,522,523,524,525,526,527,(*DispMenuConfigGameGoodUseTimeInit)},
+		{521, 0, 0, 0, 0, 0, 0, 0,(* DispMenuConfigGameGoodUseTimeUp)},
+		{522, 0, 0, 0, 0, 0, 0, 0,(* DispMenuConfigGameGoodUseTimeDown)},
+		{523, 0, 0, 0, 0, 0, 0, 0,(* DispMenuConfigGameGoodUseTimeLeft)},
+		{524, 0, 0, 0, 0, 0, 0, 0,(* DispMenuConfigGameGoodUseTimeRight)},
+		{525, 0, 0, 0, 0, 0, 0, 0,(* DispMenuConfigGameGoodUseTimeEscUp)},
+		{526, 0, 0, 0, 0, 0, 0, 0,(* DispMenuConfigGameGoodUseTimeEscDown)},
+		{527, 0, 0, 0, 0, 0, 0, 0,(* DispMenuConfigGameGoodUseTimeEscOk)},
+								
+		//------------------------------------------------------------------		
+		//设置追光跑道游戏差使用时间范围初始化
+		//------------------------------------------------------------------
+		{528,529,530,531,532,533,534,535,(*DispMenuConfigGameBadUseTimeInit)},
+		{529, 0, 0, 0, 0, 0, 0, 0,(*DispMenuConfigGameBadUseTimeUp)},
+		{530, 0, 0, 0, 0, 0, 0, 0,(*DispMenuConfigGameBadUseTimeDown)},
+		{531, 0, 0, 0, 0, 0, 0, 0,(*DispMenuConfigGameBadUseTimeLeft)},
+		{532, 0, 0, 0, 0, 0, 0, 0,(*DispMenuConfigGameBadUseTimeRight)},
+		{533, 0, 0, 0, 0, 0, 0, 0,(*DispMenuConfigGameBadUseTimeEscUp)},
+		{534, 0, 0, 0, 0, 0, 0, 0,(*DispMenuConfigGameBadUseTimeEscDown)},
+		{535, 0, 0, 0, 0, 0, 0, 0,(*DispMenuConfigGameBadUseTimeEscOk)},
 		
         #ifdef DynamicBar
         {30,31,32,33,34,(*DispMenuDataInit)}, //"Data"

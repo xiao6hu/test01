@@ -451,16 +451,16 @@ extern struct Menu * TipBar;
 
 
 #define GameStartDeviceAddr_PosX  51
-#define GamStartDeviceAddr_PosY  4
+#define GameStartDeviceAddr_PosY  4
 
 #define GameEndDeviceAddr_PosX  51
 #define GameEndDeviceAddr_PosY  4
 
+#define Config_GameGoodUseTime_PosX  43-8
+#define Config_GameGoodUseTime_PosY  4
 
-
-
-
-
+#define Config_GameBadUseTime_PosX  43-8
+#define Config_GameBadUseTime_PosY  4
 
 
 //-----------------------
@@ -590,23 +590,9 @@ extern struct Menu * TipBar;
 #define SetGameFailDelayTimeIndex       488   
 #define SetGameWaitDelayTimeIndex       496
 #define SetGameStartDeviceAddrIndex     504
-#define SetGameEndtDeviceAddrIndex      512
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#define SetGameEndDeviceAddrIndex       512
+#define Config_GameGoodUseTimeIndex     520
+#define Config_GameBadUseTimeIndex      528
 
 
 void BarMenuInit(void);

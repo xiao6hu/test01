@@ -540,12 +540,12 @@ u8 analyzeUartPacket()
 					(OS_FLAGS) MIDI_STOP_FLAG,
 					(INT8U) OS_FLAG_SET,
 					(INT8U  *)&err);	
-
+				/*
 				OSFlagPost ((OS_FLAG_GRP *)pFlagGrpMidi,
 					(OS_FLAGS) START_KEY_FLAG,
 					(INT8U) OS_FLAG_SET,
 					(INT8U  *)&err);	
-
+*/
 
 
 

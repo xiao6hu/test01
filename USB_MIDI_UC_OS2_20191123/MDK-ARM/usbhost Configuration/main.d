@@ -121,6 +121,7 @@
 .\usbhost configuration\main.o: ..\Src\XFS5152CE\XFS5152CE.h
 .\usbhost configuration\main.o: ..\Src\game\game.h
 .\usbhost configuration\main.o: ..\Src\game\game1.h
+.\usbhost configuration\main.o: ..\Src\game\game2.h
 .\usbhost configuration\main.o: ../Inc/mxconstants.h
 .\usbhost configuration\main.o: ..\Src\CANOpen\CanFestival-3\include\STM32\can_stm32_hal.h
 .\usbhost configuration\main.o: ..\Src\MCO\mcohw.h

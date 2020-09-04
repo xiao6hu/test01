@@ -121,6 +121,7 @@
 .\usbhost configuration\setdevice.o: ..\Src\XFS5152CE\XFS5152CE.h
 .\usbhost configuration\setdevice.o: ..\Src\game\game.h
 .\usbhost configuration\setdevice.o: ..\Src\game\game1.h
+.\usbhost configuration\setdevice.o: ..\Src\game\game2.h
 .\usbhost configuration\setdevice.o: ..\Src\MCO\mco.h
 .\usbhost configuration\setdevice.o: ..\Src\APP\GlobalVar.h
 .\usbhost configuration\setdevice.o: ..\Src\APP\define.h

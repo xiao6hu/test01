@@ -121,6 +121,7 @@
 .\usbhost configuration\usart1.o: ..\Src\XFS5152CE\XFS5152CE.h
 .\usbhost configuration\usart1.o: ..\Src\game\game.h
 .\usbhost configuration\usart1.o: ..\Src\game\game1.h
+.\usbhost configuration\usart1.o: ..\Src\game\game2.h
 .\usbhost configuration\usart1.o: ..\Src\midi\Keyboard.h
 .\usbhost configuration\usart1.o: ..\Src\MCO\mco.h
 .\usbhost configuration\usart1.o: ..\Src\APP\GlobalVar.h

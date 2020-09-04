@@ -122,3 +122,4 @@
 .\usbhost configuration\24cxx.o: ..\Src\XFS5152CE\XFS5152CE.h
 .\usbhost configuration\24cxx.o: ..\Src\game\game.h
 .\usbhost configuration\24cxx.o: ..\Src\game\game1.h
+.\usbhost configuration\24cxx.o: ..\Src\game\game2.h

@@ -23,6 +23,10 @@ u8 XFS5152CE_Flag=0;
 
 u8 VoiceBuff[4096];
 
+
+
+
+
 void XFS5152CE_Config(void)
 {
 	#if 0

@@ -133,6 +133,7 @@
 ".\usbhost configuration\xfs5152ce.o"
 ".\usbhost configuration\game1.o"
 ".\usbhost configuration\game.o"
+".\usbhost configuration\game2.o"
 ".\usbhost configuration\rtc.o"
 ".\usbhost configuration\ledcontrol.o"
 ".\usbhost configuration\crc16.o"

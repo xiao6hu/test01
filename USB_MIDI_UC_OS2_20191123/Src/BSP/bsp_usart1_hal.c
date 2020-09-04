@@ -34,6 +34,12 @@ void BSP_Init(void)
 	//MX_GPIO_Init();
 	MX_FATFS_Init();
 	MX_USB_HOST_Init();
+
+
+
+	Get_ExtMemoryData();	
+
+	
 	/* USER CODE BEGIN 2 */
 	//sd_detect_gpio_confing();
 	KEY_Init();

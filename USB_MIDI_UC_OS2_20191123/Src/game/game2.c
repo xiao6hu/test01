@@ -1,7 +1,11 @@
 /****************************游戏追光跑道**************************************/
 #include "includes.h"
 
-//extern void MyTimr2Callback (OS_TMR *ptmr, void *p_arg);
+extern void MyTimr2Callback (OS_TMR *ptmr, void *p_arg);
+
+
+
+
 
 
 void game2(void)
@@ -10,6 +14,9 @@ void game2(void)
 	RTC_TimeTypeDef GameStopTime;
 	GameRankingTypeDef GameUseTime;
 
+	volatile u32 GameUseTimeAccReg;
+	
+	u8 CurrentRanking;
 	INT8U err;	
 	UartProtocl *p_msg;	
 
@@ -20,8 +27,8 @@ void game2(void)
 		
 	}while ((p_msg->command != MIDI_PLAY) || (p_msg->addr != RamSetParameters.GameStartDeviceAddr));
 
-	T1000_POWER_OFF();
 
+	/*
 	MIDI_StopPlayFlag=0;
 	MIDI_PlayFlag =0;
 	MIDI_StopFlag =0;
@@ -36,35 +43,63 @@ void game2(void)
 	Cycles=0;
 	Status=0;
 	flag=0;
-
-	my_strcpy(VoiceBuff, "追光跑道现在开始");
+*/
+	
+	my_strcpy(VoiceBuff, "追光跑道游戏现在开始！");
 	XFS5152CE_Play(XFS5152CE_NON_WAIT_PLAY | XFS5152CE_NON_WAIT_STOP);
+	
+	do
+	{ 
+		p_msg = ((UartProtocl *)OSQPend(GAME_RX_Q, 0, &err));
+		
+	}while ((p_msg->command != MIDI_STOP) || (p_msg->addr != RamSetParameters.GameStartDeviceAddr));
+
+	T1000_POWER_ON();
+	OSTimeDlyHMSM(0, 0,4,0);
+	T1000_POWER_OFF();
 
 	HAL_RTC_GetTime(&RtcHandle,&GameStartTime,RTC_FORMAT_BIN);
-
-	p_msg = ((UartProtocl *)OSQPend(GAME_RX_Q, (RamSetParameters.GameWaitDelayTime+1)*1000, &err));
-		
-	if ((p_msg->command==MIDI_STOP) || (p_msg->addr != RamSetParameters.GameStartDeviceAddr))
-	{
-		T1000_POWER_ON();
-	}
-
+	OSTimeDlyHMSM(0, 0,(RamSetParameters.GameWaitDelayTime),0);
+	
+	Timr2=OSTmrCreate (0,
+					((RamSetParameters.GameFailDelayTime - RamSetParameters.GameWaitDelayTime)*1000/10),
+					OS_TMR_OPT_ONE_SHOT,
+					(OS_TMR_CALLBACK) MyTimr2Callback,
+					(void*)0, 
+					(INT8U*)"Timr2",
+					(INT8U*)&err);
+	OSTmrStart ((OS_TMR *)Timr2,(INT8U *)&err);
+	
+	
 	//err = OSQFlush(GAME_RX_Q);
+					
+					
+	
 	while(1)
 	{
-		p_msg = ((UartProtocl *)OSQPend(GAME_RX_Q, ((RamSetParameters.GameFailDelayTime - RamSetParameters.GameWaitDelayTime)+1)*1000, &err));
+		p_msg = ((UartProtocl *)OSQPend(GAME_RX_Q, 0, &err));
 		
-		if (err== OS_ERR_TIMEOUT)
+		if ((p_msg->command==MIDI_STOP) && (p_msg->addr == 0x00))
 		{
-			GameEnd();	
+			Game2Failure();	
 			return;
 		}
-		else if ((p_msg->command==MIDI_PLAY) || (p_msg->addr != RamSetParameters.GameEndDeviceAddr))
+		
+		else if ((p_msg->command==MIDI_PLAY) && (p_msg->addr == RamSetParameters.GameEndDeviceAddr))
 		{
 			break;		
 		}
 	}
-	OSTimeDlyHMSM(0, 0,2,0);
+	
+	/*
+	do
+	{ 
+		p_msg = ((UartProtocl *)OSQPend(GAME_RX_Q, 0, &err));
+		
+	}while ((p_msg->command != MIDI_PLAY) || (p_msg->addr != RamSetParameters.GameEndDeviceAddr));
+	*/
+	
+	//OSTimeDlyHMSM(0, 0,2,0);
 	
 	HAL_RTC_GetTime(&RtcHandle,&GameStopTime,RTC_FORMAT_BIN);
 
@@ -97,9 +132,80 @@ void game2(void)
 		snprintf(my_strchr(VoiceBuff,'\0'), 2+1,"%2d", CurrentRanking);
 		my_strcpy(my_strchr(VoiceBuff,'\0'), "名");
 	}
-	my_strcpy(my_strchr(VoiceBuff,'\0'), "，请按开关继续挑战");
+
+	if ((GameUseTimeAccReg >= RamSetParameters.GameGoodUseTimeStart) && (GameUseTimeAccReg <= RamSetParameters.GameGoodUseTimeEnd))
+	{
+		my_strcpy(my_strchr(VoiceBuff,'\0'), "，像豹子一样的速度，完美！");
+	}
+	else 
+	//if ((GameUseTimeAccReg >= RamSetParameters.GameBadUseTimeStart) && (GameUseTimeAccReg <= RamSetParameters.GameBadUseTimeEnd))
+	{
+		my_strcpy(my_strchr(VoiceBuff,'\0'), "，龟速前行，需要锻炼身体哟！");
+	}
+	
+	my_strcpy(my_strchr(VoiceBuff,'\0'), "，请踩下开始键继续挑战");
 	XFS5152CE_Play(XFS5152CE_NON_WAIT_PLAY | XFS5152CE_NON_WAIT_STOP);
-	GameRankingDataSave();			
+
+	GameRankingDataSave();	
+
+	OSTimeDlyHMSM(0, 0,15,0);
+
+
+
 }
 
+
+
+
+
+void Game2Failure(void)
+{
+	INT8U err;
+	
+	my_strcpy(VoiceBuff, "游戏失败，请踩下开始键重新开始！");
+	//XFS5152CE_SendData(my_strlen(VoiceBuff)+XFS5152CE_CMD_AND_PAR, VOICE_MIX_CMD, GB2313, VoiceBuff);		
+
+	XFS5152CE_Play(XFS5152CE_NON_WAIT_PLAY | XFS5152CE_WAIT_STOP);
+	
+	//OSSemPost(XFS5152CE_SemSignal);
+	//OSTimeDlyHMSM(0,0,1,0);
+	//GameEnd();
+	//OSTimeDlyHMSM(0, 0,2,0);
+	
+	OSFlagPost ((OS_FLAG_GRP *)pFlagGrpMidi,
+				(OS_FLAGS) START_KEY_FLAG,
+				(INT8U) OS_FLAG_CLR,
+				(INT8U  *)&err);
+	
+	TxDeviceCmd(DEFAULT_SLAVE_ADDR,LIGHTS_OFF,
+				(U8)(GROUP1_W_LED_BIT_OFF|
+				GROUP1_R_LED_BIT_OFF|
+				GROUP1_G_LED_BIT_OFF|
+				GROUP1_B_LED_BIT_OFF));
+		
+}
+
+void Game2End(void)
+{
+	INT8U err;	
+	
+
+	my_strcpy(VoiceBuff, "游戏结束，请踩下开始键重新开始！");
+	XFS5152CE_Play(XFS5152CE_NON_WAIT_PLAY | XFS5152CE_WAIT_STOP);
+	//XFS5152CE_SendData(my_strlen(VoiceBuff)+XFS5152CE_CMD_AND_PAR, VOICE_MIX_CMD, GB2313, VoiceBuff);	
+	//OSSemPost(XFS5152CE_SemSignal);
+	//OSTimeDlyHMSM(0, 0,2,0);
+
+	OSFlagPost ((OS_FLAG_GRP *)pFlagGrpMidi,
+				(OS_FLAGS) START_KEY_FLAG,
+				(INT8U) OS_FLAG_CLR,
+				(INT8U  *)&err);
+	
+	TxDeviceCmd(DEFAULT_SLAVE_ADDR,LIGHTS_OFF,
+				(U8)(GROUP1_W_LED_BIT_OFF|
+				GROUP1_R_LED_BIT_OFF|
+				GROUP1_G_LED_BIT_OFF|
+				GROUP1_B_LED_BIT_OFF));
+	
+}
 

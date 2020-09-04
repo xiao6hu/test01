@@ -506,6 +506,8 @@ U8 * _CONST_ GameModeSetCN[]=
 	{"设置游戏开始地址"},
 	{"设置游戏结束地址"},	
 
+	{"设置成绩优异范围"},
+	{"设置成绩差劲范围"},	
 
 };
 
@@ -521,7 +523,8 @@ U8 * _CONST_ GameModeSetEN[]=
 	{"SetGameWaitTime"},
 	{"SetGameStartAddr"},
 	{"SetGameEndAddr"},
-
+	{"SetGameGoodRange"},
+	{"SetGameBadRange"},
 };
 
 

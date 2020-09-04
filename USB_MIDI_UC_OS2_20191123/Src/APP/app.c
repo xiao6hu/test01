@@ -793,48 +793,34 @@ void Task_MidiPlay(void *p_arg)
 
 void Task_AutoLighits(void *p_arg)
 {
-    
+	(void)p_arg; 
 	INT8U err;
 	OS_FLAGS Flags;
-	
-	//INT32U ticks;
-
-	(void)p_arg; 
 	
     while (1)
     {	
 		Flags = OSFlagQuery ((OS_FLAG_GRP *)pFlagGrpMidi,
 							(INT8U *)&err);
-		
-		
 		if (((Flags & AUTO_LIGHTS_EN_DIS_FLAG) != AUTO_LIGHTS_EN_DIS_FLAG) && 
 			((Flags & AUTO_LIGHT_FLAG) == AUTO_LIGHT_FLAG) && 
 			(RamSetParameters.DeviceTotal!=0x00) &&
-			(T1000TimerOnOffFlag == TIMER_ON) &&
+			//(T1000TimerOnOffFlag == TIMER_ON) &&
 			((Flags & START_KEY_FLAG) != START_KEY_FLAG))
 		{	
-			T1000_POWER_ON();
+			//T1000_POWER_ON();
 			lights_control();		
 		}
-		//ticks = (LightsCntVal* OS_TICKS_PER_SEC)/ 1000uL;
-		//OSTimeDly(ticks);
-		
-		//OSTimeDlyHMSM(0, 0,0,LightsCntVal);	
 		else
 		{
-			T1000_POWER_OFF();
+			//T1000_POWER_OFF();
 			OSTimeDlyHMSM(0, 0,0,100);
 		}
     }
 }
 
 
-
-
 void Task_Display(void *p_arg)
 {
-     
-	
 	//INT8U err;
 	
 	u8 KeyVal=NO_KEY;
@@ -1098,7 +1084,7 @@ void Post_GAME_RX_Msg(UartProtocl msg)
 {		
 	static u8 MsgCnt=0;
 	GAME_RX_Msg[MsgCnt] =msg;
-	OSQPost( GAME_RX_Q,(u8*)& GAME_RX_Msg[MsgCnt]);
+	OSQPostFront( GAME_RX_Q,(u8*)& GAME_RX_Msg[MsgCnt]);
 	MsgCnt++;								//执行下个缓冲区，避免覆盖原来的按键数据
 	if(MsgCnt== GAME_RX_MESSAGES)
 	{
