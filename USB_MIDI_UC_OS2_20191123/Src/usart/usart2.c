@@ -77,6 +77,8 @@ void Uart2SendData(unsigned char ch)
 }
 
 
+
+
 void TIM7_Configuration(void)
 {
 	__HAL_RCC_TIM7_CLK_ENABLE();

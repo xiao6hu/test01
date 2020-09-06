@@ -18,12 +18,20 @@ void game2(void)
 	
 	u8 CurrentRanking;
 	INT8U err;	
-	UartProtocl *p_msg;	
+	volatile UartProtocl *p_msg;	
+
+	//OS_FLAGS  Flags;
+
+	u32 GameFailDelayTime;
+	#define GAME_FAIL_PER_TICKS 10
+
 
 	err = OSQFlush(GAME_RX_Q);
 	do
 	{ 
-		p_msg = ((UartProtocl *)OSQPend(GAME_RX_Q, 0, &err));
+		//p_msg = ((UartProtocl *)OSQPend(GAME_RX_Q, 0, &err));
+		OSTimeDlyHMSM(0, 0,0,10);
+		p_msg = (UartProtocl *)OSQAccept(GAME_RX_Q, &err);
 		
 	}while ((p_msg->command != MIDI_PLAY) || (p_msg->addr != RamSetParameters.GameStartDeviceAddr));
 
@@ -46,11 +54,12 @@ void game2(void)
 */
 	
 	my_strcpy(VoiceBuff, "追光跑道游戏现在开始！");
-	XFS5152CE_Play(XFS5152CE_NON_WAIT_PLAY | XFS5152CE_NON_WAIT_STOP);
-	
+	//XFS5152CE_Play(XFS5152CE_NON_WAIT_PLAY | XFS5152CE_NON_WAIT_STOP);
+	XFS5152CE_Play(XFS5152CE_WAIT_PLAY);
 	do
 	{ 
-		p_msg = ((UartProtocl *)OSQPend(GAME_RX_Q, 0, &err));
+		OSTimeDlyHMSM(0, 0,0,10);
+		p_msg = (UartProtocl *)OSQAccept(GAME_RX_Q, &err);
 		
 	}while ((p_msg->command != MIDI_STOP) || (p_msg->addr != RamSetParameters.GameStartDeviceAddr));
 
@@ -61,6 +70,12 @@ void game2(void)
 	HAL_RTC_GetTime(&RtcHandle,&GameStartTime,RTC_FORMAT_BIN);
 	OSTimeDlyHMSM(0, 0,(RamSetParameters.GameWaitDelayTime),0);
 	
+/*
+	OSFlagPost ((OS_FLAG_GRP *)pFlagGrpMidi,
+			(OS_FLAGS) GAME_FAILURE_FLAG,
+			(INT8U) OS_FLAG_CLR,
+			(INT8U  *)&err);
+
 	Timr2=OSTmrCreate (0,
 					((RamSetParameters.GameFailDelayTime - RamSetParameters.GameWaitDelayTime)*1000/10),
 					OS_TMR_OPT_ONE_SHOT,
@@ -69,25 +84,41 @@ void game2(void)
 					(INT8U*)"Timr2",
 					(INT8U*)&err);
 	OSTmrStart ((OS_TMR *)Timr2,(INT8U *)&err);
-	
-	
-	//err = OSQFlush(GAME_RX_Q);
-					
-					
-	
+*/
+	GameFailDelayTime = (RamSetParameters.GameFailDelayTime - RamSetParameters.GameWaitDelayTime)*1000;
+	err = OSQFlush(GAME_RX_Q);	
 	while(1)
 	{
-		p_msg = ((UartProtocl *)OSQPend(GAME_RX_Q, 0, &err));
-		
-		if ((p_msg->command==MIDI_STOP) && (p_msg->addr == 0x00))
+		/*
+		Flags = OSFlagQuery((OS_FLAG_GRP *)pFlagGrpMidi,
+				(INT8U *)&err);
+
+		if ((Flags & GAME_FAILURE_FLAG) == GAME_FAILURE_FLAG)
 		{
+			OSFlagPost ((OS_FLAG_GRP *)pFlagGrpMidi,
+						(OS_FLAGS) GAME_FAILURE_FLAG,
+						(INT8U) OS_FLAG_CLR,
+						(INT8U  *)&err);	
 			Game2Failure();	
 			return;
 		}
-		
-		else if ((p_msg->command==MIDI_PLAY) && (p_msg->addr == RamSetParameters.GameEndDeviceAddr))
+*/
+		OSTimeDlyHMSM(0, 0,0,GAME_FAIL_PER_TICKS);
+		//p_msg = ((UartProtocl *)OSQPend(GAME_RX_Q, GAME_FAIL_PER_TICKS, &err));
+		p_msg = (UartProtocl *)OSQAccept(GAME_RX_Q, &err);
+		if ((p_msg->command==MIDI_PLAY) && (p_msg->addr == RamSetParameters.GameEndDeviceAddr))
 		{
 			break;		
+		}
+		else
+		{
+			GameFailDelayTime = (GameFailDelayTime > GAME_FAIL_PER_TICKS) ? (GameFailDelayTime - GAME_FAIL_PER_TICKS) :0;
+			if (GameFailDelayTime == 0)
+			{
+				Game2Failure();	
+				//OSTimeDlyHMSM(0, 0,5,0);
+				return;
+			}
 		}
 	}
 	
@@ -144,13 +175,13 @@ void game2(void)
 	}
 	
 	my_strcpy(my_strchr(VoiceBuff,'\0'), "，请踩下开始键继续挑战");
-	XFS5152CE_Play(XFS5152CE_NON_WAIT_PLAY | XFS5152CE_NON_WAIT_STOP);
+	//XFS5152CE_SendData(my_strlen(VoiceBuff)+XFS5152CE_CMD_AND_PAR, VOICE_MIX_CMD, GB2313, VoiceBuff,XFS5152CE_WAIT_PLAY);	
+
+	XFS5152CE_Play(XFS5152CE_WAIT_PLAY);
 
 	GameRankingDataSave();	
 
-	OSTimeDlyHMSM(0, 0,15,0);
-
-
+	//OSTimeDlyHMSM(0, 0,15,0);
 
 }
 
@@ -163,15 +194,15 @@ void Game2Failure(void)
 	INT8U err;
 	
 	my_strcpy(VoiceBuff, "游戏失败，请踩下开始键重新开始！");
-	//XFS5152CE_SendData(my_strlen(VoiceBuff)+XFS5152CE_CMD_AND_PAR, VOICE_MIX_CMD, GB2313, VoiceBuff);		
+	//XFS5152CE_SendData(my_strlen(VoiceBuff)+XFS5152CE_CMD_AND_PAR, VOICE_MIX_CMD, GB2313, VoiceBuff,XFS5152CE_WAIT_PLAY);		
 
-	XFS5152CE_Play(XFS5152CE_NON_WAIT_PLAY | XFS5152CE_WAIT_STOP);
+	XFS5152CE_Play(XFS5152CE_WAIT_PLAY);
 	
 	//OSSemPost(XFS5152CE_SemSignal);
 	//OSTimeDlyHMSM(0,0,1,0);
 	//GameEnd();
 	//OSTimeDlyHMSM(0, 0,2,0);
-	
+	/*
 	OSFlagPost ((OS_FLAG_GRP *)pFlagGrpMidi,
 				(OS_FLAGS) START_KEY_FLAG,
 				(INT8U) OS_FLAG_CLR,
@@ -182,6 +213,8 @@ void Game2Failure(void)
 				GROUP1_R_LED_BIT_OFF|
 				GROUP1_G_LED_BIT_OFF|
 				GROUP1_B_LED_BIT_OFF));
+
+				*/
 		
 }
 

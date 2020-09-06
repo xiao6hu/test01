@@ -66,7 +66,7 @@ U8 * _CONST_ XFS5152CE_TEXT[]=
 
 
 void XFS5152CE_Config(void);
-void XFS5152CE_SendData(u16 length, u8 command, u8 parameter, u8* data);
+void XFS5152CE_SendData(u16 length, u8 command, u8 parameter, u8* data, u8 IsWita);
 void XFS5152CE_SendData_Wita(u16 length, u8 command, u8 parameter, u8* data);
 void XFS5152CE_ReturnStatus(u8 dat);
 

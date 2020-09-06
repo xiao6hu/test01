@@ -72,7 +72,7 @@
 
 #define TASK_UART_RX_STK_SIZE	512	  //∂®“Â’ª
 
-#define TASK_GAME_STK_SIZE 512
+#define TASK_GAME_STK_SIZE 1024
 	
 #define TASK_GAME_VOICE_PROMPT_STK_SIZE	 256
 

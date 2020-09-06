@@ -231,9 +231,11 @@ void Task_Start(void *p_arg)
 	   &task_XFS5152CE_Play_stk[TASK_XFS5152CE_Play_STK_SIZE-1], XFS5152CE_Play_TASK_PRIO);
 	
 	
-	
+	/*
 	OSTaskCreate(Task_LedControl,(void *)0,		   	//创建任务3
 	   &task_LedControl_stk[TASK_LED_CONTROL_STK_SIZE-1], LED_CONTROL_TASK_PRIO);
+	*/
+	
 	/*
 	OSTaskCreate(Task_Mco_Tx,(void *)0,		   	//创建任务3
 	   &task_Mco_Tx_stk[TASK_MCO_TX_STK_SIZE-1], MCO_TX_TASK_PRIO);
@@ -606,7 +608,7 @@ void Task_Mco_Rx (void *p_arg)
 		ticks = (RamSetParameters.SyllableDelayTime * OS_TICKS_PER_SEC)/ 1000uL;
 		OSTimeDly(ticks);
 		
-		OSTimeDlyHMSM(0, 0,0,10);
+		OSTimeDlyHMSM(0, 0,0,5);
 		
 		
 		//OSTmrStart ((OS_TMR *)Timr4,(INT8U *)&err);
@@ -978,7 +980,7 @@ void Task_XFS5152CE_Play(void *p_arg)
 					(INT8U) OS_FLAG_CLR,
 					(INT8U  *)&err);
 			
-			XFS5152CE_SendData(my_strlen(VoiceBuff)+XFS5152CE_CMD_AND_PAR, VOICE_MIX_CMD, GB2313, VoiceBuff);
+			//XFS5152CE_SendData(my_strlen(VoiceBuff)+XFS5152CE_CMD_AND_PAR, VOICE_MIX_CMD, GB2313, VoiceBuff);
 			
 			OSFlagPend ((OS_FLAG_GRP *)pFlagGrpMidi,
 						(OS_FLAGS) XFS5152CE_PlayEnd_FLAG ,
@@ -1027,6 +1029,7 @@ void Task_LedControl(void *p_arg)
 	
 	while (1)
     {	
+		/*
 		p_msg = ((UartProtocl *)OSQPend(GAME_RX_Q, 0, &err));
 		
 		switch (p_msg->command)
@@ -1035,6 +1038,9 @@ void Task_LedControl(void *p_arg)
 			case MIDI_STOP: TxStopLedControl(p_msg);break;
 			default:break;
 		}	
+		*/
+		OSTimeDlyHMSM(1, 0,0,0);
+		
 	}
 }
 
@@ -1084,7 +1090,7 @@ void Post_GAME_RX_Msg(UartProtocl msg)
 {		
 	static u8 MsgCnt=0;
 	GAME_RX_Msg[MsgCnt] =msg;
-	OSQPostFront( GAME_RX_Q,(u8*)& GAME_RX_Msg[MsgCnt]);
+	OSQPost( GAME_RX_Q,(u8*)& GAME_RX_Msg[MsgCnt]);
 	MsgCnt++;								//执行下个缓冲区，避免覆盖原来的按键数据
 	if(MsgCnt== GAME_RX_MESSAGES)
 	{

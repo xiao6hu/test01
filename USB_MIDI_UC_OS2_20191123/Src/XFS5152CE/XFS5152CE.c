@@ -90,7 +90,7 @@ void XFS5152CE_SendData(u16 length, u8 command, u8 parameter, u8* data)
 */
 
 
-#if 1
+#if 0
 
 void XFS5152CE_SendData_Wita(u16 length, u8 command, u8 parameter, u8* data)
 {
@@ -133,9 +133,71 @@ void XFS5152CE_SendData_Wita(u16 length, u8 command, u8 parameter, u8* data)
 #endif
 
 
-
-
 #if 1
+
+void XFS5152CE_SendData(u16 length, u8 command, u8 parameter, u8* data, u8 IsWita)
+{
+	//INT8U  err;
+	u16 len;
+	u8 ErrorCnt;
+	//u8 msg;
+	u8 ch;
+	ErrorCnt=3;
+	do
+	{
+		len=length;
+		Uart1SendData(XFS5152CE_FRAME_HEADER);
+		Uart1SendData((u8)(len>>8));
+		Uart1SendData((u8)(len&0x00ff));
+		Uart1SendData(command);
+		if (--len > 0) 
+		{
+			Uart1SendData(parameter);
+			if (--len > 0) 
+			{
+				HAL_UART_Transmit(&huart1,data,len,10);
+				while (!__HAL_UART_GET_FLAG(&huart1, UART_FLAG_TC)); 
+				__HAL_UART_CLEAR_FLAG(&huart1,UART_FLAG_TC);
+				
+			}
+		}
+
+		while (!__HAL_UART_GET_FLAG(&huart1, UART_FLAG_RXNE))
+		{
+			OSTimeDlyHMSM(0, 0,0,100);
+		}
+
+		//ch =(uint8_t)(huart1.Instance->DR & (uint8_t)0x00FF);
+		
+		HAL_UART_Receive(&huart1,&ch,1,10);
+		//__HAL_UART_CLEAR_FLAG(&huart1,UART_FLAG_RXNE);
+	}
+	while ((ch != XFS5152CE_RX_OK) && (--ErrorCnt>0));
+	
+	
+	if ((ErrorCnt ==0) || ((IsWita & XFS5152CE_WAIT_PLAY) != XFS5152CE_WAIT_PLAY))
+	{
+		return;
+	}
+	ErrorCnt=3;
+	do
+	{
+		while (!__HAL_UART_GET_FLAG(&huart1, UART_FLAG_RXNE))
+		{
+			OSTimeDlyHMSM(0, 0,0,100);
+		}
+		HAL_UART_Receive(&huart1,&ch,1,10);
+		//ch =(uint8_t)(huart1.Instance->DR & (uint8_t)0x00FF);
+		//__HAL_UART_CLEAR_FLAG(&huart1,UART_FLAG_RXNE);
+	}
+	while ((ch != XFS5152CE_IDLE) && (--ErrorCnt>0));
+}
+	
+#endif
+
+
+
+#if 0
 
 void XFS5152CE_SendData(u16 length, u8 command, u8 parameter, u8* data)
 {
@@ -163,6 +225,76 @@ void XFS5152CE_SendData(u16 length, u8 command, u8 parameter, u8* data)
 				(INT8U  *)&err);
 		
 }
+#endif
+
+#if 0
+
+void XFS5152CE_SendData(u16 length, u8 command, u8 parameter, u8* data)
+{
+	INT8U  err;
+	
+
+	do
+	{
+		Uart1SendData(XFS5152CE_FRAME_HEADER);
+		Uart1SendData((u8)(length>>8));
+		Uart1SendData((u8)(length&0x00ff));
+		Uart1SendData(command);
+		if (--length > 0) 
+		{
+			Uart1SendData(parameter);
+			if (--length > 0) 
+			{
+				HAL_UART_Transmit(&huart1,data,length);
+			}
+		}
+
+		while (!__HAL_UART_GET_FLAG(&huart1, UART_FLAG_RXNE))
+		{
+			OSTimeDlyHMSM(0, 0,0,100);
+		}
+		HAL_USART_Receive(&huart1,&ch,1,10);
+		__HAL_UART_CLEAR_FLAG(&huart1,UART_FLAG_RXNE);
+	}
+	while (ch== )
+
+
+	while (!__HAL_UART_GET_FLAG(&huart1, UART_FLAG_RXNE))
+	{
+		OSTimeDlyHMSM(0, 0,0,100);
+	}
+ 	HAL_USART_Receive(&huart1,&ch,1,10);
+	__HAL_UART_CLEAR_FLAG(&huart1,UART_FLAG_RXNE);
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+	/*
+	OSFlagPend ((OS_FLAG_GRP *)pFlagGrpMidi,
+				(OS_FLAGS) UART1_TX_OK_FLAG,
+				(INT8U )OS_FLAG_WAIT_SET_ALL| OS_FLAG_CONSUME,
+				(INT32U) 0,
+				(INT8U *)&err);
+		
+	XFS5152CE_Flag=1;
+	
+	OSFlagPost ((OS_FLAG_GRP *)pFlagGrpMidi,
+				(OS_FLAGS) XFS5152CE_PlayEnd_FLAG,
+				(INT8U) OS_FLAG_CLR,
+				(INT8U  *)&err);
+	*/	
+}
+#endif
 
 
 void XFS5152CE_ReturnStatus(u8 dat)
@@ -278,6 +410,10 @@ PlayStatus=1 等待上一条语音播放完成后再播放
 */
 void XFS5152CE_Play(u8 PlayStatus)
 {
+	
+	XFS5152CE_SendData(my_strlen(VoiceBuff)+XFS5152CE_CMD_AND_PAR, VOICE_MIX_CMD, GB2313, VoiceBuff, PlayStatus);	
+	#if 0
+	
 	INT8U  err;
 	
 	
@@ -330,9 +466,8 @@ void XFS5152CE_Play(u8 PlayStatus)
 	}
 			
 	OSSemPost(XFS5152CE_SemSignal);	
+	#endif
 }
-#endif
-
 #endif
 
 

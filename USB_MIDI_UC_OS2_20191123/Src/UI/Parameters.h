@@ -292,7 +292,7 @@ typedef struct{
 /*U32 VoicePromptTime;*/																300,\
 /*int GameRankingNumber;*/																1,\
 /*GameRankingTypeDef GameRanking[MAX_GAME_RANKING_NUMBER+1];*/							DEFAULT_GAME_RANKING_PARAMETERS,\
-/*U8 GameSelect;*/																		0,\
+/*U8 GameSelect;*/																		1,\
 /*CAN_DeviceTotalTypeDef CAN_DeviceTotal;*/												DEFAULT_CAN_DEVICE_TOTA_PARAMETERS,\
 /*U16 ReturnTopTime;*/																	60, \
 /*LedParaStructTypeDef LedPara;*/														{20, 4, 0, 1024, {255, 0, 0},0,LedParaGroupsInit},\

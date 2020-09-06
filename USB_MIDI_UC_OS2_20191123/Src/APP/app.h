@@ -139,7 +139,7 @@ extern OS_EVENT *  XFS5152CE_PlayEnd_Sem;
 
 #define PARA_SET_OK_FLAG  BIT(25) 
 
-
+#define GAME_FAILURE_FLAG BIT(26) 
 
 
 

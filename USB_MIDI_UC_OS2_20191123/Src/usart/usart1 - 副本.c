@@ -105,6 +105,21 @@ void Uart1SendData(unsigned char ch)
     HAL_USART_Transmit(&husart1,&ch,1,10);
     while (!__HAL_USART_GET_FLAG(&husart1, USART_FLAG_TC));
 }
+
+void Uart1SendData(unsigned char ch)
+{
+	/* 将Printf内容发往串口 */
+	//USART_SendData(USART1, (unsigned char) ch);
+	    //while (!(USART1->SR & USART_FLAG_TXE));
+	//while (!USART_GetFlagStatus(USART1, USART_FLAG_TC));
+	
+    HAL_USART_Transmit(&husart1,&ch,1,10);
+    while (!__HAL_USART_GET_FLAG(&husart1, USART_FLAG_TC));
+}
+
+
+
+
 #if 0
 /*
  * 函数名：fputc

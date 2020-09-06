@@ -131,7 +131,7 @@ void USART1_IRQHandler(void)
 	
     HAL_UART_IRQHandler(&huart1);
 
-	#if 1
+	#if 0
 	if(__HAL_UART_GET_FLAG(&huart1, UART_FLAG_RXNE))
   	{ 
 		__HAL_UART_CLEAR_FLAG(&huart1, UART_FLAG_RXNE);
@@ -369,7 +369,7 @@ u8 analyzeUartPacket()
 	
 	
 	{
-		Post_GAME_RX_Msg(Packet);
+		//Post_GAME_RX_Msg(Packet);
 		
 		
       	//status_flash=1;
@@ -378,7 +378,7 @@ u8 analyzeUartPacket()
 			case MIDI_PLAY:	
 			{
 				
-				OSTimeDlyHMSM(0, 0,0,10);
+				OSTimeDlyHMSM(0, 0,0,5);
 				
 				ParaUpdate();
 
@@ -405,7 +405,7 @@ u8 analyzeUartPacket()
 				
 
 				
-				//Post_GAME_RX_Msg(Packet);
+				Post_GAME_RX_Msg(Packet);
 
 				//成人模式
 				if (RamSetParameters.GameModeSelect == ADULT_MODE)
@@ -519,7 +519,7 @@ u8 analyzeUartPacket()
 			
 				LedColorCycleControl();
 			
-				//Post_GAME_RX_Msg(Packet);
+				Post_GAME_RX_Msg(Packet);
 				#if 0
 				if(!MIDI_StopPlayFlag)
 				{
@@ -671,9 +671,10 @@ void USART1_Config(void)
 	
 	
     HAL_UART_Init(&huart1);
-    __HAL_UART_ENABLE_IT(&huart1, UART_IT_RXNE);
 	
-	USART1_NVIC_Configuration();
+    //__HAL_UART_ENABLE_IT(&huart1, UART_IT_RXNE);
+	//USART1_NVIC_Configuration();
+	
 	//TIM6_Configuration();
     __HAL_UART_ENABLE(&huart1);
 }
@@ -690,6 +691,17 @@ void Uart1SendData(unsigned char ch)
     while (!__HAL_UART_GET_FLAG(&huart1, UART_FLAG_TC)); 
 	__HAL_UART_CLEAR_FLAG(&huart1,UART_FLAG_TC);
 }
+/*/
+void Uart1ReceiveData(unsigned char ch)
+{
+    HAL_USART_Receive(&huart1,&ch,1,10);
+    while (!__HAL_UART_GET_FLAG(&huart1, UART_FLAG_RXNE)); 
+	__HAL_UART_CLEAR_FLAG(&huart1,UART_FLAG_TC);
+}
+
+*/
+
+
 
 //配置矢量中断，矢量的意思就是有顺序，有先后的意思。
 void USART1_NVIC_Configuration(void)
@@ -890,10 +902,21 @@ void TxDeviceCmd(u8 addr,u8 cmd,u8 dat)
 void SimulateGameFailure(void)
 {
 	
+	INT8U err;
+
+/*	 
 	Packet.addr=0x00;
 	Packet.command=MIDI_STOP;
 	Packet.data=0x00;
 	Post_GAME_RX_Msg(Packet);
+*/
+	
+	
+	
+	OSFlagPost ((OS_FLAG_GRP *)pFlagGrpMidi,
+			(OS_FLAGS) GAME_FAILURE_FLAG,
+			(INT8U) OS_FLAG_SET,
+			(INT8U  *)&err);	
 }
 
 
